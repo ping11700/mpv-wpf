@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35605.110 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mpv-wpf", "mpv-wpf\mpv-wpf.csproj", "{01329429-658D-4095-B2A5-E886955968E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{F602E201-6E97-4FBF-8D39-2FDCE1BB9165}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Controls", "Controls\Controls.csproj", "{123861FB-B656-4BCE-BB44-A7CEB64B00F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mpv", "mpv\mpv.csproj", "{533E170E-6A35-4651-8E8E-714431504FCF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{01329429-658D-4095-B2A5-E886955968E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01329429-658D-4095-B2A5-E886955968E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01329429-658D-4095-B2A5-E886955968E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01329429-658D-4095-B2A5-E886955968E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F602E201-6E97-4FBF-8D39-2FDCE1BB9165}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F602E201-6E97-4FBF-8D39-2FDCE1BB9165}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F602E201-6E97-4FBF-8D39-2FDCE1BB9165}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F602E201-6E97-4FBF-8D39-2FDCE1BB9165}.Release|Any CPU.Build.0 = Release|Any CPU
+		{123861FB-B656-4BCE-BB44-A7CEB64B00F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{123861FB-B656-4BCE-BB44-A7CEB64B00F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{123861FB-B656-4BCE-BB44-A7CEB64B00F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{123861FB-B656-4BCE-BB44-A7CEB64B00F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{533E170E-6A35-4651-8E8E-714431504FCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{533E170E-6A35-4651-8E8E-714431504FCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{533E170E-6A35-4651-8E8E-714431504FCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{533E170E-6A35-4651-8E8E-714431504FCF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D7AA887F-09F4-4DD1-947F-D30AD822EEA7}
+	EndGlobalSection
+EndGlobal
