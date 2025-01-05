@@ -1,9 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+	<TargetFramework>net8.0-windows</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+	<BaseOutputPath>..\bin\</BaseOutputPath>
+	<Nullable>enable</Nullable>
 	<Platforms>x86;x64;ARM64</Platforms>
 	<OutputType>Library</OutputType>
 	<LangVersion>preview</LangVersion>

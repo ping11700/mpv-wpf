@@ -3,8 +3,12 @@
   <PropertyGroup>
     <TargetFramework>net8.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
-    <UseWPF>true</UseWPF>
+	<BaseOutputPath>..\bin\</BaseOutputPath>
+	<OutputType>Library</OutputType>
+	<UseWPF>true</UseWPF>
     <ImplicitUsings>enable</ImplicitUsings>
+	<Platforms>ARM64;x64;x86</Platforms>
+	<LangVersion>preview</LangVersion>
   </PropertyGroup>
 
 </Project>
