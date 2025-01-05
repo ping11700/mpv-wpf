@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+	<Platforms>x86;x64;ARM64</Platforms>
+	<OutputType>Library</OutputType>
+	<LangVersion>preview</LangVersion>
+  </PropertyGroup>
+	
+	
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Exec Command="xcopy /y /s /e /i  &quot;$(ProjectDir)Dlls\$(Platform)\*.dll&quot; &quot;$(OutDir)&quot;" />
+
+		<Exec Command="xcopy /y /s /e /i  &quot;$(ProjectDir)portable_config\&quot; &quot;$(OutDir)portable_config\&quot;" />
+	</Target>
+</Project>

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35605.110 d17.13
+VisualStudioVersion = 17.13.35605.110
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mpv-wpf", "mpv-wpf\mpv-wpf.csproj", "{01329429-658D-4095-B2A5-E886955968E4}"
 EndProject
@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Controls", "Controls\Controls.csproj", "{123861FB-B656-4BCE-BB44-A7CEB64B00F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mpv", "mpv\mpv.csproj", "{533E170E-6A35-4651-8E8E-714431504FCF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MpvLib", "MpvLib\MpvLib.csproj", "{499F4F3D-8ADF-E023-2A29-C75E6719BAC9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{123861FB-B656-4BCE-BB44-A7CEB64B00F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{123861FB-B656-4BCE-BB44-A7CEB64B00F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{123861FB-B656-4BCE-BB44-A7CEB64B00F6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{533E170E-6A35-4651-8E8E-714431504FCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{533E170E-6A35-4651-8E8E-714431504FCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{533E170E-6A35-4651-8E8E-714431504FCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{533E170E-6A35-4651-8E8E-714431504FCF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{499F4F3D-8ADF-E023-2A29-C75E6719BAC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{499F4F3D-8ADF-E023-2A29-C75E6719BAC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{499F4F3D-8ADF-E023-2A29-C75E6719BAC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{499F4F3D-8ADF-E023-2A29-C75E6719BAC9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
