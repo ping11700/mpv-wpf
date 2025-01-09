@@ -8,16 +8,13 @@
     <ImplicitUsings>enable</ImplicitUsings>
 	<BaseOutputPath>..\bin\</BaseOutputPath>
 	<UseWPF>true</UseWPF>
+	<LangVersion>preview</LangVersion>
 	<Platforms>x86;x64;ARM64;</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="_Model\" />
-    <Folder Include="_ViewModel\" />
+    <ProjectReference Include="..\MpvLib\MpvLib.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,7 +1,4 @@
-﻿using System.Windows.Input;
-using System.Windows.Interop;
-
-namespace mpv_wpf._View;
+﻿namespace mpv_wpf._View;
 
 /// <summary>
 /// 视频播放器 专用窗体 Base
@@ -116,7 +113,7 @@ public abstract class BasePlayerWindow : BaseWindowChrome
     protected virtual void Setting(object sender, ExecutedRoutedEventArgs e) { }
 
 
- 
+
 
     #region WallPaperEngine
 
@@ -281,7 +278,7 @@ public abstract class BasePlayerWindow : BaseWindowChrome
     #endregion
 
 
-    
+
     #region  Play Local 本地文件播放
 
     /// <summary>
@@ -385,7 +382,7 @@ public abstract class BasePlayerWindow : BaseWindowChrome
                 if (arr?.Length > 0 && arr.All(x => File.Exists(x)))
                     PlayLocalMedias(arr);
 
-                 handled = true;
+                handled = true;
                 break;
             default:
                 break;

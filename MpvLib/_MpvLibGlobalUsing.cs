@@ -1,12 +1,8 @@
-﻿global using MpvLib.Native;
-global using System;
-global using System.Collections.Generic;
-global using System.Globalization;
-global using System.IO;
-global using System.Linq;
-global using System.Runtime.InteropServices;
-global using System.Runtime.Versioning;
+﻿global using System.Runtime.InteropServices;
 global using System.Text;
+global using static MpvLib.Native.LibMpv;
+global using MpvLib.Data;
+global using MpvLib.Native;
+global using System.Globalization;
+global using MpvLib.Utils;
 global using System.Text.RegularExpressions;
-global using System.Threading;
-global using System.Threading.Tasks;

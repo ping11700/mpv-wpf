@@ -123,8 +123,8 @@ public partial class PlayerShell : BasePlayerWindow
     /// <summary>
     /// 
     /// </summary>
-    protected override void PlayLocalMedias(string[] files) 
-    { 
+    protected override void PlayLocalMedias(string[] files)
+    {
         this.DataContext = ((App)App.Current)?.GetRequiredService<ViewModel_PlayerLocal>();
 
         IPlayer?.Start(files, isFile: true);
@@ -228,7 +228,7 @@ public partial class PlayerShell : BasePlayerWindow
 
 
     #endregion
-     
+
 
     #region Private
 
@@ -289,7 +289,7 @@ public partial class PlayerShell : BasePlayerWindow
         if (b)
         {
             this.Cursor = Cursors.Arrow;
-            this.TopFunc_SimplePanel.Opacity  = 1;
+            this.TopFunc_SimplePanel.Opacity = 1;
             this.BottomFunc_UC.Opacity = 1;
             this.Drawer_ToggleButton.Opacity = 1;
         }

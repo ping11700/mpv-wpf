@@ -6,6 +6,7 @@
 	<BaseOutputPath>..\bin\</BaseOutputPath>
 	<Nullable>enable</Nullable>
     <Platforms>AnyCPU;x64</Platforms>
+	<LangVersion>preview</LangVersion>
   </PropertyGroup>
 
 </Project>
