@@ -1,5 +1,6 @@
 ﻿namespace mpv_wpf.Player;
 
+
 public class PlayerMpv : NotifyObject, IPlayer
 {
     public string Path => _player.Path;
@@ -83,13 +84,13 @@ public class PlayerMpv : NotifyObject, IPlayer
     public event Action? Play2EndEvent;
 
 
-    private readonly mpv   mpv.Player _player;
+    private readonly MpvLib.Player _player;
 
     private bool _prePlay;
 
     public PlayerMpv(IServiceProvider serviceProvider)
     {
-        _player = new LibMpv.Player();
+        _player = new MpvLib.Player();
 
         _player.InitializedEvent -= Player_InitializedEvent;
         _player.InitializedEvent += Player_InitializedEvent;
@@ -123,7 +124,7 @@ public class PlayerMpv : NotifyObject, IPlayer
 
     private void Player_ErrorEvent(string msg)
     {
-        _logger.LogError($"PlayerError: {msg}");
+        Logger.Error($"PlayerError: {msg}");
 
         ErrorEvent?.Invoke(msg);
     }
@@ -258,7 +259,7 @@ public class PlayerMpv : NotifyObject, IPlayer
         }
         else if (reasonTag == "Error")
         {
-            Growl.Warning(errorTag);
+            //Growl.Warning(errorTag);
 
             ErrorEvent?.Invoke(errorTag);
         }
@@ -326,8 +327,8 @@ public class PlayerMpv : NotifyObject, IPlayer
 
             if (urls.Length > 0)
                 _player.Start(urls);
-            else
-                Growl.Info("文件格式不支持~");
+            //else
+            //    Growl.Info("文件格式不支持~");
         }
         else
         {

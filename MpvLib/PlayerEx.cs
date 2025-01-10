@@ -1,12 +1,13 @@
 ﻿namespace MpvLib;
 
 
-
 /// <summary>
 /// https://hooke007.github.io/official_man/mpv.html
 /// </summary>
 public partial class Player
 {
+    public string Path => GetPropertyString("path");
+
     public string FileName => GetPropertyString("filename");
 
     public double Duration => GetPropertyDouble("duration");
@@ -21,6 +22,9 @@ public partial class Player
 
     public bool IsPause => GetPropertyString("pause") == "yes";
 
+    public int VideoRotate => GetPropertyInt("video-rotate");
+
+    
     /// <summary>
     /// <0.01-100>
     /// </summary>
@@ -276,27 +280,18 @@ public partial class Player
 
         ObservePropertyInt("playlist-pos", value =>
         {
-            PlaylistPos = value;
             PlaylistPosChangedEvent?.Invoke(value);
-
-            //if (FileEnded && value == -1)
-            //    if (GetPropertyString("keep-open") == "no" && App.Exit)
-            //        CommandV("quit");
         });
 
 
         ObservePropertyInt("time-pos", value => TimePosChangedEvent?.Invoke());
 
-
         ObservePropertyBool("pause", value => PauseEvent?.Invoke(value));
-
-        VideoRotate = GetPropertyInt("video-rotate");
 
         ObservePropertyInt("video-rotate", value =>
         {
             if (VideoRotate != value)
             {
-                VideoRotate = value;
                 UpdateVideoSize("dwidth", "dheight");
             }
         });

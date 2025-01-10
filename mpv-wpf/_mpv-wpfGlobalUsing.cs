@@ -12,3 +12,6 @@ global using System.Windows.Threading;
 global using System.Windows.Interop;
 global using System.Collections;
 global using mpv_wpf.__MVVM;
+global using MpvLib;
+global using Core.Logger;
+global using Core.Utils;

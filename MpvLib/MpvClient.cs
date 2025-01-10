@@ -183,6 +183,8 @@ public class MpvClient : IDisposable
     protected virtual void OnSeek() => SeekEvent?.Invoke();
     protected virtual void OnPlaybackRestart() => PlaybackRestartEvent?.Invoke();
 
+  
+    #region Commands
     public void Command(string command)
     {
         mpv_error err = mpv_command_string(Handle, command);
@@ -216,51 +218,11 @@ public class MpvClient : IDisposable
         if (err < 0)
             HandleError(err, "error executing command: " + string.Join("\n", args));
     }
+    #endregion
 
-    public string Expand(string? value)
-    {
-        if (value == null)
-            return "";
 
-        if (!value.Contains("${"))
-            return value;
+    #region Property Getters/Setters  Observes
 
-        string[] args = { "expand-text", value };
-        int count = args.Length + 1;
-        IntPtr[] pointers = new IntPtr[count];
-        IntPtr rootPtr = Marshal.AllocHGlobal(IntPtr.Size * count);
-
-        for (int index = 0; index < args.Length; index++)
-        {
-            var bytes = GetUtf8Bytes(args[index]);
-            IntPtr ptr = Marshal.AllocHGlobal(bytes.Length);
-            Marshal.Copy(bytes, 0, ptr, bytes.Length);
-            pointers[index] = ptr;
-        }
-
-        Marshal.Copy(pointers, 0, rootPtr, count);
-        IntPtr resultNodePtr = Marshal.AllocHGlobal(16);
-        mpv_error err = mpv_command_ret(Handle, rootPtr, resultNodePtr);
-
-        foreach (IntPtr ptr in pointers)
-            Marshal.FreeHGlobal(ptr);
-
-        Marshal.FreeHGlobal(rootPtr);
-
-        if (err < 0)
-        {
-            HandleError(err, "error executing command: " + string.Join("\n", args));
-            Marshal.FreeHGlobal(resultNodePtr);
-            return "property expansion error";
-        }
-
-        mpv_node resultNode = new();
-        Marshal.PtrToStructure(resultNodePtr, resultNode);
-        string ret = ConvertFromUtf8(resultNode.str);
-        mpv_free_node_contents(resultNodePtr);
-        Marshal.FreeHGlobal(resultNodePtr);
-        return ret;
-    }
 
     public bool GetPropertyBool(string name)
     {
@@ -480,12 +442,15 @@ public class MpvClient : IDisposable
         }
     }
 
+
+    #endregion
+
+
     private void HandleError(mpv_error err, string msg)
     {
         ErrorEvent?.Invoke($"Error: {GetError(err)}  Msg:{msg}");
 
-        //Terminal.WriteError(msg);
-        //Terminal.WriteError(GetError(err));
+        Logger.Error($"Error: {GetError(err)}  Msg:{msg}");
     }
 
 

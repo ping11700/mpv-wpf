@@ -2,29 +2,24 @@
 
 public partial class Player : MpvClient
 {
-
-    public string Path { get; set; }
-
-    public int VideoRotate { get; set; }
-
-    public float Autofit { get; set; } = 0.6f;
-    public float AutofitSmaller { get; set; } = 0.3f;
-    public float AutofitLarger { get; set; } = 0.8f;
-
     public AutoResetEvent ShutdownAutoResetEvent { get; } = new AutoResetEvent(false);
-    public nint MainHandle { get; set; }
-    public List<MediaTrack> MediaTracks { get; set; } = [];
+
+    public nint MainHandle { get; private set; }
+
+    public List<MediaTrack> MediaTracks { get; private set; } = [];
+
     public List<TimeSpan> BluRayTitles { get; } = [];
+
     public object MediaTracksLock { get; } = new object();
-    public System.Drawing.Size VideoSize { get; set; }
 
     public List<MpvClient> Clients { get; } = [];
 
 
+    private System.Drawing.Size _videoSize;
 
-    DateTime _lastLoad;
-    bool _wasAviSynthLoaded;
-    static readonly object _loadFolderLockObject = new();
+    private DateTime _lastLoad;
+    private bool _wasAviSynthLoaded;
+    private static readonly object _loadFolderLockObject = new();
 
     public void Init(IntPtr formHandle)
     {
@@ -110,6 +105,11 @@ public partial class Player : MpvClient
         InitializedEvent?.Invoke();
     }
 
+    public void MainEventLoop()
+    {
+        while (true)
+            mpv_wait_event(MainHandle, -1);
+    }
 
 
 
@@ -123,19 +123,14 @@ public partial class Player : MpvClient
         if (VideoRotate == 90 || VideoRotate == 270)
             size = new System.Drawing.Size(size.Height, size.Width);
 
-        if (size != VideoSize && size != System.Drawing.Size.Empty)
+        if (size != _videoSize && size != System.Drawing.Size.Empty)
         {
-            VideoSize = size;
+            _videoSize = size;
             VideoSizeChangedEvent?.Invoke(size);
         }
     }
 
-    public void MainEventLoop()
-    {
-        while (true)
-            mpv_wait_event(MainHandle, -1);
-    }
-
+  
     protected override void OnShutdown()
     {
         //IsQuitNeeded = false;
@@ -172,7 +167,6 @@ public partial class Player : MpvClient
     // executed before OnFileLoaded
     protected override void OnStartFile()
     {
-        Path = GetPropertyString("path");
         base.OnStartFile();
         Util.Run(LoadFolder);
     }

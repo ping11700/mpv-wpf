@@ -18,7 +18,6 @@ public class Util
     }
 
 
-
     [SupportedOSPlatform("windows")]
     public static string GetShortcutTarget(string path)
     {

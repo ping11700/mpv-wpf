@@ -6,3 +6,5 @@ global using MpvLib.Native;
 global using System.Globalization;
 global using MpvLib.Utils;
 global using System.Text.RegularExpressions;
+global using System.Runtime.Versioning;
+global using Core.Logger;

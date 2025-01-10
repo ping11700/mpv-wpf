@@ -8,9 +8,12 @@
 	<Platforms>x86;x64;ARM64</Platforms>
 	<OutputType>Library</OutputType>
 	<LangVersion>preview</LangVersion>
+	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
-	
-	
+	<ItemGroup>
+	  <ProjectReference Include="..\Core\Core.csproj" />
+	</ItemGroup>
+
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
 		<Exec Command="xcopy /y /s /e /i  &quot;$(ProjectDir)Dlls\$(Platform)\*.dll&quot; &quot;$(OutDir)&quot;" />
 
