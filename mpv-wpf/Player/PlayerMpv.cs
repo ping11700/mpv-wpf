@@ -1,8 +1,9 @@
 ﻿namespace mpv_wpf.Player;
 
-
 public class PlayerMpv : NotifyObject, IPlayer
 {
+    public bool IsFullScreen { get; set; }
+
     public string Path => _player.Path;
 
     public string FileName => _player.FileName;
@@ -88,7 +89,7 @@ public class PlayerMpv : NotifyObject, IPlayer
 
     private bool _prePlay;
 
-    public PlayerMpv(IServiceProvider serviceProvider)
+    public PlayerMpv()
     {
         _player = new MpvLib.Player();
 

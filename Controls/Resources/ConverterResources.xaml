@@ -1,0 +1,14 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converter="clr-namespace:Controls.Converters">
+
+    <converter:Bool2VisibilityConverter x:Key="Bool2VisibilityConverter" />
+
+    <converter:InverseBool2VisibilityConverter x:Key="InverseBool2VisibilityConverter" />
+
+    <converter:InverseBoolConverter x:Key="InverseBoolConverter" />
+
+    <converter:InverseObject2VisibilitylConverter x:Key="InverseObject2VisibilitylConverter" />
+
+</ResourceDictionary>

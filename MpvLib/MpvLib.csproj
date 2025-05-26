@@ -10,6 +10,10 @@
 	<LangVersion>preview</LangVersion>
 	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Dlls\x64\MediaInfo.dll" />
+  </ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\Core\Core.csproj" />
 	</ItemGroup>

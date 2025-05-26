@@ -1,0 +1,13 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/Controls;component/Resources/CommonResources.xaml" />
+
+        <ResourceDictionary Source="pack://application:,,,/Controls;component/Resources/ControlResources.xaml" />
+
+        <ResourceDictionary Source="pack://application:,,,/Controls;component/Resources/ConverterResources.xaml" />
+
+        <ResourceDictionary Source="pack://application:,,,/Controls;component/Resources/PathResources.xaml" />
+
+        <ResourceDictionary Source="pack://application:,,,/Controls;component/Resources/StyleResources.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>  

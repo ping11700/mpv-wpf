@@ -1,13 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-	<TargetFramework>net8.0-windows</TargetFramework>
-	<OutputType>Library</OutputType>
-	<ImplicitUsings>enable</ImplicitUsings>
-	<BaseOutputPath>..\bin\</BaseOutputPath>
-	<Nullable>enable</Nullable>
-    <Platforms>AnyCPU;x64</Platforms>
-	<LangVersion>preview</LangVersion>
+	  <TargetFrameworks>$(MainTargetFrameworks)</TargetFrameworks>
+	  <TargetFramework>$(MainTargetFramework)</TargetFramework>
+	  <OutputType>Library</OutputType>
+	  <Nullable>enable</Nullable>
+	  <BaseOutputPath>..\bin\</BaseOutputPath>
+	  <UseWPF>true</UseWPF>
+	  <Platforms>x86;x64;ARM64</Platforms>
+	  <OutputType>Library</OutputType>
+	  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	  <LangVersion>preview</LangVersion>
   </PropertyGroup>
 
 </Project>

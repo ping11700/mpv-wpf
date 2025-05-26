@@ -1,0 +1,49 @@
+﻿<Project>
+	<PropertyGroup>
+		<CommonVersion>1.0.0.0</CommonVersion>
+		<!-- release 时 支持多个版本 -->
+		<MainTargetFrameworks>net8.0-windows;</MainTargetFrameworks>
+
+		<MainTargetFramework>net8.0-windows</MainTargetFramework>
+		<!-- 程序自动找最新的 runtime 比如编译6 版本 可以在 8 版本下运行 -->
+		<RollForward>Major</RollForward>
+		<LangVersion>preview</LangVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)'=='Debug'">
+		<!-- debug 时 版本问题-->
+		<AssemblyVersion>$(CommonVersion)</AssemblyVersion>
+		<ProductVersion>$(CommonVersion)</ProductVersion>
+		<FileVersion>$(CommonVersion)</FileVersion>
+		<Version>$(CommonVersion)</Version>
+		<!--https://blog.lindexi.com/post/dotnet-8-%E7%A0%B4%E5%9D%8F%E6%80%A7%E6%94%B9%E5%8A%A8-%E5%9C%A8-AssemblyInformationalVersionAttribute-%E6%B7%BB%E5%8A%A0%E4%B8%8A-git-%E7%9A%84-commit-%E5%8F%B7.html-->
+		<IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+	</PropertyGroup>
+	<!--<Choose>
+		<When Condition="'$(Configuration)'=='Release'">
+			<PropertyGroup Condition="'$(Platform)'=='x86'">
+				--><!-- 目前需要根据 Platform 来决定程序主体和播放器的 net 版本 --><!--
+				<MainTargetFramework>net6.0-windows</MainTargetFramework>
+			</PropertyGroup>
+			<PropertyGroup Condition="'$(Platform)'=='x64'">
+				--><!-- 目前需要根据 Platform 来决定程序主体和播放器的 net 版本 --><!--
+				<MainTargetFramework>net6.0-windows</MainTargetFramework>
+			</PropertyGroup>
+			<PropertyGroup Condition="'$(Platform)'=='ARM64'">
+				--><!-- 目前需要根据 Platform 来决定程序主体和播放器的 net 版本 --><!--
+				<MainTargetFramework>net6.0-windows</MainTargetFramework>
+			</PropertyGroup>
+		</When>
+	</Choose>-->
+
+	<PropertyGroup Condition="'$(Platform)'=='x86'">
+		<DefineConstants>$(DefineConstants);x86</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Platform)'=='x64'">
+		<DefineConstants>$(DefineConstants);x64</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Platform)'=='ARM64'">
+		<DefineConstants>$(DefineConstants);ARM64</DefineConstants>
+	</PropertyGroup>
+
+</Project>

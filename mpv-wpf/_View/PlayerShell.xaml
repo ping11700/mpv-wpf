@@ -15,7 +15,6 @@
     xmlns:vm="clr-namespace:mpv_wpf._ViewModel"
     Width="1200"
     Height="800"
-    d:DataContext="{d:DesignInstance {x:Type vm:ViewModel_PlayerBase}}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     Background="Transparent"
@@ -38,129 +37,6 @@
             </Border>
         </ControlTemplate>
     </local:BasePlayerWindow.Template>
-    <Window.Resources>
-        <Style x:Key="ContentPresenterStyle" TargetType="{x:Type ContentPresenter}">
-            <Setter Property="Content" Value="{Binding Mode=OneWay}" />
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding PlayingType, Mode=OneWay}" Value="Local">
-                    <Setter Property="ContentTemplate">
-                        <Setter.Value>
-                            <DataTemplate DataType="{x:Type vm:ViewModel_PlayerLocal}">
-                                <local:UserControl_PlayerLocal />
-                            </DataTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </DataTrigger>
-                <DataTrigger Binding="{Binding PlayingType, Mode=OneWay}" Value="Common">
-                    <Setter Property="ContentTemplate">
-                        <Setter.Value>
-                            <DataTemplate DataType="{x:Type vm:ViewModel_PlayerCommon}">
-                                <local:UserControl_PlayerCommon />
-                            </DataTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </DataTrigger>
-
-                <DataTrigger Binding="{Binding PlayingType, Mode=OneWay}" Value="Cinema">
-                    <Setter Property="ContentTemplate">
-                        <Setter.Value>
-                            <DataTemplate DataType="{x:Type vm:ViewModel_PlayerCinema}">
-                                <local:UserControl_PlayerCinema />
-                            </DataTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </DataTrigger>
-
-                <DataTrigger Binding="{Binding PlayingType, Mode=OneWay}" Value="CinemaOwner">
-                    <Setter Property="ContentTemplate">
-                        <Setter.Value>
-                            <DataTemplate DataType="{x:Type vm:ViewModel_PlayerCinemaOwner}">
-                                <local:UserControl_PlayerCinemaOwner />
-                            </DataTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </DataTrigger>
-
-                <DataTrigger Binding="{Binding PlayingType, Mode=OneWay}" Value="Cloud">
-                    <Setter Property="ContentTemplate">
-                        <Setter.Value>
-                            <DataTemplate DataType="{x:Type vm:ViewModel_PlayerCloud}">
-                                <local:UserControl_PlayerCloud />
-                            </DataTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </DataTrigger>
-
-                <DataTrigger Binding="{Binding IPlayer.IsMini, Mode=OneWay}" Value="True">
-                    <Setter Property="ContentTemplate">
-                        <Setter.Value>
-                            <DataTemplate>
-                                <local:UserControl_PlayMini />
-                            </DataTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
-
-        <Style x:Key="ContentPresentDrawerStyle" TargetType="{x:Type ContentPresenter}">
-            <Setter Property="Content" Value="{Binding Mode=OneWay}" />
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding PlayingType, Mode=OneWay}" Value="Local">
-                    <Setter Property="ContentTemplate">
-                        <Setter.Value>
-                            <DataTemplate DataType="{x:Type vm:ViewModel_PlayerLocal}">
-                                <local:UserControl_PlayerLocalDrawer />
-                            </DataTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </DataTrigger>
-                <DataTrigger Binding="{Binding PlayingType, Mode=OneWay}" Value="Common">
-                    <Setter Property="ContentTemplate">
-                        <Setter.Value>
-                            <DataTemplate DataType="{x:Type vm:ViewModel_PlayerCommon}">
-                                <local:UserControl_PlayerCommonDrawer />
-                            </DataTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </DataTrigger>
-
-                <DataTrigger Binding="{Binding PlayingType, Mode=OneWay}" Value="Cinema">
-                    <Setter Property="ContentTemplate">
-                        <Setter.Value>
-                            <DataTemplate DataType="{x:Type vm:ViewModel_PlayerCinema}">
-                                <local:UserControl_PlayerCinemaDrawer />
-                            </DataTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </DataTrigger>
-
-                <DataTrigger Binding="{Binding PlayingType, Mode=OneWay}" Value="CinemaOwner">
-                    <Setter Property="ContentTemplate">
-                        <Setter.Value>
-                            <DataTemplate DataType="{x:Type vm:ViewModel_PlayerCinemaOwner}">
-                                <local:UserControl_PlayerCinemaOwnerDrawer />
-                            </DataTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </DataTrigger>
-
-                <DataTrigger Binding="{Binding PlayingType, Mode=OneWay}" Value="Cloud">
-                    <Setter Property="ContentTemplate">
-                        <Setter.Value>
-                            <DataTemplate DataType="{x:Type vm:ViewModel_PlayerCloud}">
-                                <local:UserControl_PlayerCloudDrawer />
-                            </DataTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </DataTrigger>
-
-                <DataTrigger Binding="{Binding IPlayer.IsMini, Mode=OneWay}" Value="True">
-                    <Setter Property="Visibility" Value="Collapsed" />
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
-    </Window.Resources>
     <hwnd:HwndHostPresenter>
         <hwnd:HwndHostPresenter.HwndHost>
             <!--  视频  -->
@@ -194,23 +70,6 @@
                             </Border.Background>
                         </Border>
 
-                        <!--  返回主页  -->
-                        <control:PathButton
-                            Margin="10"
-                            Padding="0,0,6,0"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Top"
-                            attach:Attach_Icon.Height="18"
-                            attach:Attach_Icon.Width="18"
-                            BPath="{StaticResource BackHomeGeometry}"
-                            Command="{Binding BackHoneCmd, Mode=OneWay}"
-                            Content="打开主界面">
-                            <!--  操作日志  -->
-                            <command:AttachCommand.AttachTarget>
-                                <command:EventMethod AttachEventName="Click" DoCommand="{Binding BackHomeWindowOperateCmd, Mode=OneWay}" />
-                            </command:AttachCommand.AttachTarget>
-                        </control:PathButton>
-
                         <!--  视频标题  -->
                         <TextBlock
                             MaxWidth="200"
@@ -218,7 +77,7 @@
                             HorizontalAlignment="Center"
                             VerticalAlignment="Top"
                             d:Text="@123"
-                            FontSize="{StaticResource UIFont16}"
+                            FontSize="16"
                             Foreground="{StaticResource Common_White}"
                             Text="{Binding VideoTitle, Mode=OneWay}"
                             TextTrimming="CharacterEllipsis" />
@@ -230,33 +89,6 @@
                             HorizontalAlignment="Right"
                             VerticalAlignment="Top"
                             Orientation="Horizontal">
-                            <!--  小窗播放  -->
-                            <Button
-                                Margin="0,0,12,0"
-                                attach:Attach_Icon.Geometry="{StaticResource MiniPlayGeometry}"
-                                attach:Attach_Icon.Height="14"
-                                attach:Attach_Icon.Width="14"
-                                Command="{x:Static command:ControlCommands.MiniPlay}"
-                                Style="{StaticResource ButtonPathStyle}"
-                                ToolTip="迷你播放">
-                                <!--  操作日志  -->
-                                <command:AttachCommand.AttachTarget>
-                                    <command:EventMethod AttachEventName="Click" DoCommand="{Binding EnterMiniPlayOperateCmd, Mode=OneWay}" />
-                                </command:AttachCommand.AttachTarget>
-                            </Button>
-
-                            <!--  桌面播放  -->
-                            <Button
-                                Margin="0,0,12,0"
-                                attach:Attach_Icon.Geometry="{StaticResource DesktopPlayGeometry}"
-                                Command="{x:Static command:ControlCommands.WallPaperEngine}"
-                                Style="{StaticResource ButtonPathStyle}"
-                                ToolTip="桌面播放">
-                                <!--  操作日志  -->
-                                <command:AttachCommand.AttachTarget>
-                                    <command:EventMethod AttachEventName="Click" DoCommand="{Binding WallPaperEngineOperateCmd, Mode=OneWay}" />
-                                </command:AttachCommand.AttachTarget>
-                            </Button>
 
                             <!--  设置  -->
                             <Button
@@ -264,12 +96,7 @@
                                 attach:Attach_Icon.Geometry="{StaticResource SettingGeometry}"
                                 Command="{x:Static command:ControlCommands.Setting}"
                                 Style="{StaticResource ButtonPathStyle}"
-                                ToolTip="设置">
-                                <!--  操作日志  -->
-                                <!--<command:AttachCommand.AttachTarget>
-                                        <command:EventMethod AttachEventName="Click" DoCommand="{Binding WallPaperEngineOperateCmd, Mode=OneWay}" />
-                                    </command:AttachCommand.AttachTarget>-->
-                            </Button>
+                                ToolTip="设置" />
 
                             <!--  置顶  -->
                             <ToggleButton
@@ -340,7 +167,7 @@
 
 
                     <!--  业务内容  -->
-                    <ContentPresenter x:Name="ContentPresent" Style="{StaticResource ContentPresenterStyle}" />
+                    <ContentPresenter x:Name="ContentPresent" />
 
 
                     <!--  左下角  文字提示 动画  -->
@@ -374,10 +201,8 @@
                         x:Name="ContentPresentDrawer"
                         Grid.Column="1"
                         Width="0"
-                        Margin="0,30,0,0"
-                        Style="{StaticResource ContentPresentDrawerStyle}" />
+                        Margin="0,30,0,0" />
                     <!--  抽屉  -->
-
                 </Grid>
             </AdornerDecorator>
         </hwnd:HwndHostPresenter.Adornment>

@@ -1,0 +1,330 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:o="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+
+
+
+    <Color x:Key="LightPrimaryColor">#f3fbff</Color>
+    <Color x:Key="PrimaryColor">#326cf3</Color>
+    <Color x:Key="DarkPrimaryColor">#326cf3</Color>
+
+    <Color x:Key="LightDangerColor">#fff6f7</Color>
+    <Color x:Key="DangerColor">#db3340</Color>
+    <Color x:Key="DarkDangerColor">#db3340</Color>
+
+    <Color x:Key="LightWarningColor">#fffcf5</Color>
+    <Color x:Key="WarningColor">#e9af20</Color>
+    <Color x:Key="DarkWarningColor">#e9af20</Color>
+
+    <Color x:Key="LightInfoColor">#f1fdff</Color>
+    <Color x:Key="InfoColor">#00bcd4</Color>
+    <Color x:Key="DarkInfoColor">#00bcd4</Color>
+
+    <Color x:Key="LightSuccessColor">#f3fff6</Color>
+    <Color x:Key="SuccessColor">#2db84d</Color>
+    <Color x:Key="DarkSuccessColor">#2db84d</Color>
+
+    <Color x:Key="PrimaryTextColor">#212121</Color>
+    <Color x:Key="SecondaryTextColor">#757575</Color>
+    <Color x:Key="ThirdlyTextColor">#bdbdbd</Color>
+    <Color x:Key="ReverseTextColor">#212121</Color>
+    <Color x:Key="TextIconColor">White</Color>
+
+    <Color x:Key="BorderColor">#e0e0e0</Color>
+    <Color x:Key="SecondaryBorderColor">#757575</Color>
+    <Color x:Key="BackgroundColor">#eeeeee</Color>
+    <Color x:Key="RegionColor">#ffffff</Color>
+    <Color x:Key="SecondaryRegionColor">#eeeeee</Color>
+    <Color x:Key="ThirdlyRegionColor">White</Color>
+    <Color x:Key="TitleColor">#326cf3</Color>
+    <Color x:Key="SecondaryTitleColor">#326cf3</Color>
+
+    <Color x:Key="DefaultColor">White</Color>
+    <Color x:Key="DarkDefaultColor">#f5f5f5</Color>
+
+    <Color x:Key="AccentColor">#f8491e</Color>
+    <Color x:Key="DarkAccentColor">#f8491e</Color>
+
+    <Color x:Key="DarkMaskColor">#20000000</Color>
+
+    <Color x:Key="DarkOpacityColor">#40000000</Color>
+
+    <Color x:Key="Dark02">#FF222222</Color>
+
+    <Color x:Key="Dark03">#FF333333</Color>
+
+    <Color x:Key="Dark2C">#FF2C2C2C</Color>
+
+    <Color x:Key="Dark04">#FF444444</Color>
+
+    <Color x:Key="Dark13">#FF131313</Color>
+
+    <Color x:Key="Dark20">#F2000000</Color>
+
+
+    <Color x:Key="Gray07">#FF777777</Color>
+
+    <Color x:Key="Dark07">#FF777777</Color>
+
+    <Color x:Key="Dark88000000">#88000000</Color>
+
+
+
+
+    <!--  画刷  -->
+
+    <!--  常用暗色01  -->
+    <SolidColorBrush
+        x:Key="Common_Dark02"
+        o:Freeze="True"
+        Color="{DynamicResource Dark02}" />
+
+    <!--  常用暗色02  -->
+    <SolidColorBrush
+        x:Key="Common_Dark03"
+        o:Freeze="True"
+        Color="{DynamicResource Dark03}" />
+
+    <!--  常用暗色03  -->
+    <SolidColorBrush
+        x:Key="Common_Dark2C"
+        o:Freeze="True"
+        Color="{DynamicResource Dark2C}" />
+
+    <!--  常用暗色04  -->
+    <SolidColorBrush
+        x:Key="Common_Dark04"
+        o:Freeze="True"
+        Color="{DynamicResource Dark04}" />
+
+    <!--  常用暗色05  -->
+    <SolidColorBrush
+        x:Key="Common_Dark05"
+        o:Freeze="True"
+        Color="#FF777777" />
+
+    <!--  常用暗色13  -->
+    <SolidColorBrush
+        x:Key="Common_Dark13"
+        o:Freeze="True"
+        Color="{DynamicResource Dark13}" />
+
+    <!--  常用暗色05  -->
+    <SolidColorBrush
+        x:Key="Common_Gray07"
+        o:Freeze="True"
+        Color="{DynamicResource Gray07}" />
+
+    <!--  半透明黑色  -->
+    <SolidColorBrush
+        x:Key="Common_Dark06"
+        o:Freeze="True"
+        Color="{DynamicResource Dark20}" />
+
+    <!--  常用暗色07  -->
+    <SolidColorBrush
+        x:Key="Common_Dark07"
+        o:Freeze="True"
+        Color="#26FFFFFF" />
+
+    <!--  常用暗色08  -->
+    <SolidColorBrush
+        x:Key="Common_Dark08"
+        o:Freeze="True"
+        Color="#33FFFFFF" />
+
+    <!--  常用暗色09  -->
+    <SolidColorBrush
+        x:Key="Common_Dark09"
+        o:Freeze="True"
+        Color="#FF666666" />
+
+    <!--  常用暗色09  -->
+    <SolidColorBrush
+        x:Key="Common_Dark10"
+        o:Freeze="True"
+        Color="#80000000" />
+
+    <!--  常用黑色  -->
+    <SolidColorBrush
+        x:Key="Common_Black"
+        o:Freeze="True"
+        Color="#FF000000" />
+
+    <!--  常用黑色2  -->
+    <SolidColorBrush
+        x:Key="Common_Black2"
+        o:Freeze="True"
+        Color="#E6000000" />
+
+    <!--  常用红色  -->
+    <SolidColorBrush
+        x:Key="Common_Red"
+        o:Freeze="True"
+        Color="#FFF42C2C" />
+    <!--  常用绿色  -->
+    <SolidColorBrush
+        x:Key="Common_Green"
+        o:Freeze="True"
+        Color="Green" />
+    <!--  常用白色  -->
+    <SolidColorBrush
+        x:Key="Common_White"
+        o:Freeze="True"
+        Color="#FFFFFFFF" />
+    <!--  常用白色02  -->
+    <SolidColorBrush
+        x:Key="Common_White02"
+        o:Freeze="True"
+        Color="#FFEFEFEF" />
+    <!--  常用白色03  -->
+    <SolidColorBrush
+        x:Key="Common_White03"
+        o:Freeze="True"
+        Color="#26FFFFFF" />
+    <!--  常用白色04  -->
+    <SolidColorBrush
+        x:Key="Common_White04"
+        o:Freeze="True"
+        Color="#80FFFFFF" />
+    <!--  常用白色05  -->
+    <SolidColorBrush
+        x:Key="Common_White05"
+        o:Freeze="True"
+        Color="#FFCCCCCC" />
+
+    <!--  常用金色01  -->
+    <SolidColorBrush
+        x:Key="Common_Golden01"
+        o:Freeze="True"
+        Color="#D29D4C" />
+    <!--  常用金色02  -->
+    <SolidColorBrush
+        x:Key="Common_Golden02"
+        o:Freeze="True"
+        Color="#FFFFBF5B" />
+    <!--  常用金色03  -->
+    <SolidColorBrush
+        x:Key="Common_Golden03"
+        o:Freeze="True"
+        Color="#FFF0C083" />
+    <!--  常用金色04  -->
+    <SolidColorBrush
+        x:Key="Common_Golden04"
+        o:Freeze="True"
+        Color="#FFFFDBA4" />
+
+
+    <!--  常用金色05  -->
+    <SolidColorBrush
+        x:Key="Common_Golden05"
+        o:Freeze="True"
+        Color="#FF5B3730" />
+
+    <!--  常用橙色01  -->
+    <SolidColorBrush
+        x:Key="Common_Orange01"
+        o:Freeze="True"
+        Color="#FFE74F03" />
+
+    <!--  常用灰白色  -->
+    <SolidColorBrush
+        x:Key="Common_GrayWhite"
+        o:Freeze="True"
+        Color="#EFEFEF" />
+    <!--  常用灰色  -->
+    <SolidColorBrush
+        x:Key="Common_Gray"
+        o:Freeze="True"
+        Color="#FF9F9F9F" />
+    <!--  常用灰色2  -->
+    <SolidColorBrush
+        x:Key="Common_Gray2"
+        o:Freeze="True"
+        Color="#FFCCCCCC" />
+    <!--  常用灰色3  -->
+    <SolidColorBrush
+        x:Key="Common_Gray3"
+        o:Freeze="True"
+        Color="#FF999999" />
+    <!--  常用灰色3  -->
+    <SolidColorBrush
+        x:Key="Common_Dark88000000"
+        o:Freeze="True"
+        Color="{DynamicResource Dark88000000}" />
+
+
+    <SolidColorBrush
+        x:Key="PrimaryTextBrush"
+        o:Freeze="True"
+        Color="{DynamicResource PrimaryTextColor}" />
+
+    <SolidColorBrush
+        x:Key="SuccessBrush"
+        o:Freeze="True"
+        Color="{DynamicResource SuccessColor}" />
+
+    <SolidColorBrush
+        x:Key="AccentBrush"
+        o:Freeze="True"
+        Color="{DynamicResource AccentColor}" />
+
+    <SolidColorBrush
+        x:Key="InfoBrush"
+        o:Freeze="True"
+        Color="{DynamicResource InfoColor}" />
+
+    <SolidColorBrush
+        x:Key="DarkInfoBrush"
+        o:Freeze="True"
+        Color="{DynamicResource DarkInfoColor}" />
+
+
+    <SolidColorBrush
+        x:Key="DangerBrush"
+        o:Freeze="True"
+        Color="{DynamicResource DangerColor}" />
+
+
+
+    <SolidColorBrush
+        x:Key="WarningBrush"
+        o:Freeze="True"
+        Color="{DynamicResource WarningColor}" />
+
+
+
+
+    <Thickness x:Key="DefaultControlPadding">10,6</Thickness>
+    <sys:Double x:Key="DefaultControlHeight">30</sys:Double>
+    <CornerRadius x:Key="DefaultCornerRadius">4</CornerRadius>
+
+    <!--  常用控件圆角02  -->
+    <CornerRadius x:Key="DefaultCornerRadius02" o:Freeze="True">2</CornerRadius>
+
+    <!--  常用控件圆角04  -->
+    <CornerRadius x:Key="Common_CornerRadius04" o:Freeze="True">4</CornerRadius>
+
+    <!--  常用控件圆角06  -->
+    <CornerRadius x:Key="Common_CornerRadius06" o:Freeze="True">6</CornerRadius>
+
+    <!--  常用窗体圆角08  -->
+    <CornerRadius x:Key="Common_CornerRadius08" o:Freeze="True">8</CornerRadius>
+
+    <!--  常用窗体圆角12  -->
+    <CornerRadius x:Key="Common_CornerRadius12" o:Freeze="True">12</CornerRadius>
+
+    <!--  常用窗体圆角16  -->
+    <CornerRadius x:Key="Common_CornerRadius16" o:Freeze="True">16</CornerRadius>
+
+    <FontFamily x:Key="FontFamily">Microsoft YaHei</FontFamily>
+    <!--<sys:Double x:Key="FontSize">13</sys:Double>-->
+    <sys:Double x:Key="DisableOpacity">0.5</sys:Double>
+    <sys:Double x:Key="ReadonlyOpacity">0.88</sys:Double>
+    <sys:Double x:Key="WatermarkOpacity">0.4</sys:Double>
+    <sys:String x:Key="DateFormat">yyyy年MM月dd日</sys:String>
+    <sys:String x:Key="DateTimeFormat">yyyy-MM-dd HH:mm:ss</sys:String>
+</ResourceDictionary>

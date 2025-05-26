@@ -9,6 +9,11 @@
     <ImplicitUsings>enable</ImplicitUsings>
 	<Platforms>ARM64;x64;x86</Platforms>
 	<LangVersion>preview</LangVersion>
+	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj" />
+  </ItemGroup>
 
 </Project>

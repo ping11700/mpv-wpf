@@ -1,4 +1,6 @@
-﻿namespace mpv_wpf._View;
+﻿
+
+namespace mpv_wpf._View;
 
 /// <summary>
 /// PlayerShell.xaml 的交互逻辑
@@ -17,12 +19,13 @@ public partial class PlayerShell : BasePlayerWindow
     {
         InitializeComponent();
 
-        this.Title = Consts.PlayerShellName;//API_Window.CallMainWindow  调用此参数;
+        this.Title = Consts.APPShellName;//API_Window.CallMainWindow  调用此参数;
         this.AllowDrop = true;
 
         _timer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(6) };
         _timer.Tick += (s, e) => ChangeControlVisibility(false);
         _timer.Start();
+
 
         this.VideoHwndHost.Loaded += (s, e) => player?.SetHandle(this.VideoHwndHost?.Handle ?? IntPtr.Zero);
 
@@ -31,7 +34,7 @@ public partial class PlayerShell : BasePlayerWindow
 
         this.Tips_TextBlock.DataContextChanged += (s, e) => TipAnimation();
     }
-
+  
     #region Events
 
     /// <summary>
@@ -41,7 +44,7 @@ public partial class PlayerShell : BasePlayerWindow
     /// <param name="e"></param>
     private void PlayerShell_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
     {
-        (e.OldValue as ViewModel_PlayerBase)?.Dispose();
+        //(e.OldValue as ViewModel_PlayerBase)?.Dispose();
 
         _timer?.Stop();
         _timer?.Start();
@@ -55,39 +58,9 @@ public partial class PlayerShell : BasePlayerWindow
 
     protected override void Setting(object sender, ExecutedRoutedEventArgs e)
     {
-        ((App)App.Current)?.GetRequiredService<IDialogerService>()?.Show(typeof(Border_PlayerSetting));
+
     }
 
-
-
-    /// <summary>
-    /// 桌面播放 隐藏所有, 只保留播放器页面
-    /// </summary>
-    /// <param name="isIn"></param>
-    protected override void LayoutWallPaperEnginePlay(bool isIn)
-    {
-        if (isIn == true)
-        {
-            TogAnimateDrawer(false);
-            Growl.Info(new GrowlInfo
-            {
-                Message = "双击Esc退出, \n双击空格暂停,继续",
-                WaitTime = 6,
-            });
-        }
-        this.ROOT_Grid.Visibility = isIn ? Visibility.Hidden : Visibility.Visible;
-    }
-
-    /// <summary>
-    /// 小窗播放 隐藏上下功能区
-    /// </summary>
-    /// <param name="isIn"></param>
-    protected override void LayoutMiniPlay(bool isIn)
-    {
-        this.TopFunc_SimplePanel.Visibility = isIn ? Visibility.Hidden : Visibility.Visible;
-        this.BottomFunc_UC.Visibility = isIn ? Visibility.Hidden : Visibility.Visible;
-        this.Drawer_ToggleButton.Visibility = isIn ? Visibility.Hidden : Visibility.Visible;
-    }
 
 
     /// <summary>
@@ -125,7 +98,7 @@ public partial class PlayerShell : BasePlayerWindow
     /// </summary>
     protected override void PlayLocalMedias(string[] files)
     {
-        this.DataContext = ((App)App.Current)?.GetRequiredService<ViewModel_PlayerLocal>();
+        //this.DataContext = ((App)App.Current)?.GetRequiredService<ViewModel_PlayerLocal>();
 
         IPlayer?.Start(files, isFile: true);
     }
@@ -210,14 +183,14 @@ public partial class PlayerShell : BasePlayerWindow
     {
         _timer?.Stop();
 
-        var vm = this.DataContext as ViewModel_PlayerBase;
-        vm?.Dispose();
+        //var vm = this.DataContext as ViewModel_PlayerBase;
+        //vm?.Dispose();
 
         // 这里需要把 DataContext 设置为空
         // 解决 关闭主程序的时候 关闭播放器的缺失 
         this.DataContext = null;
 
-        var b = Process.GetProcessesByName(Consts.AppName).Length > 0;
+        var b = Process.GetProcessesByName(Consts.APPName).Length > 0;
         e.Cancel = b;
 
         base.OnClosing(isHide: b);
@@ -247,14 +220,21 @@ public partial class PlayerShell : BasePlayerWindow
 
         if (isOpen)
         {
-            var animation = Util_Animation.CreateAnimation(400, 500);
-            animation.FillBehavior = FillBehavior.HoldEnd;
+
+            var animation = new DoubleAnimation(400, new Duration(TimeSpan.FromMilliseconds(500)))
+            {
+                EasingFunction = new PowerEase { EasingMode = EasingMode.EaseInOut },
+                FillBehavior = FillBehavior.HoldEnd
+            };
             this.ContentPresentDrawer.BeginAnimation(WidthProperty, animation);
         }
         else
         {
-            var animation = Util_Animation.CreateAnimation(0, 500);
-            animation.FillBehavior = FillBehavior.HoldEnd;
+            var animation = new DoubleAnimation(0, new Duration(TimeSpan.FromMilliseconds(500)))
+            {
+                EasingFunction = new PowerEase { EasingMode = EasingMode.EaseInOut },
+                FillBehavior = FillBehavior.HoldEnd
+            };
             this.ContentPresentDrawer.BeginAnimation(WidthProperty, animation);
         }
     }
@@ -265,18 +245,22 @@ public partial class PlayerShell : BasePlayerWindow
     /// </summary>
     private void TipAnimation()
     {
-        var animation = Util_Animation.CreateAnimation(0.9, 500);
-        animation.FillBehavior = FillBehavior.HoldEnd;
+        var animation = new DoubleAnimation(0.9, new Duration(TimeSpan.FromMilliseconds(500)))
+        {
+            EasingFunction = new PowerEase { EasingMode = EasingMode.EaseInOut },
+            FillBehavior = FillBehavior.HoldEnd
+        };
 
-        var animation2 = Util_Animation.CreateAnimation(0, 1000);
-        animation2.BeginTime = TimeSpan.FromSeconds(3);
+        var animation2 = new DoubleAnimation(0, new Duration(TimeSpan.FromMilliseconds(1000)))
+        {
+            EasingFunction = new PowerEase { EasingMode = EasingMode.EaseInOut },
+            BeginTime = TimeSpan.FromSeconds(3)
+        };
 
-        animation.Completed += (s, e) =>
-            this.Tips_TextBlock.BeginAnimation(OpacityProperty, animation2);
+        animation.Completed += (s, e) => this.Tips_TextBlock.BeginAnimation(OpacityProperty, animation2);
 
         this.Tips_TextBlock.BeginAnimation(OpacityProperty, animation);
     }
-
 
 
     #endregion

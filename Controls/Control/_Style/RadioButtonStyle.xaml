@@ -1,0 +1,287 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:attach="clr-namespace:Controls.AttachedProperties;assembly=Controls"
+    xmlns:local="clr-namespace:Controls.Control">
+    <ResourceDictionary.MergedDictionaries>
+        <!--  资源集合  -->
+        <ResourceDictionary Source="pack://application:,,,/Controls;component/Resources/CommonResources.xaml" />
+        <!--  资源集合  -->
+    </ResourceDictionary.MergedDictionaries>
+
+    <!--    -->
+    <Style x:Key="RadioButtonBaseStyle" TargetType="{x:Type RadioButton}">
+        <Setter Property="Foreground" Value="{StaticResource Common_White}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="attach:Attach_Border.CornerRadius" Value="4" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RadioButton}">
+                    <Border Background="{TemplateBinding Background}" CornerRadius="{Binding Path=(attach:Attach_Border.CornerRadius), RelativeSource={RelativeSource TemplatedParent}}">
+                        <StackPanel HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                            <Path
+                                Width="{Binding (attach:Attach_Icon.Width), RelativeSource={RelativeSource TemplatedParent}}"
+                                Height="{Binding (attach:Attach_Icon.Height), RelativeSource={RelativeSource TemplatedParent}}"
+                                Margin="{Binding (attach:Attach_Icon.Padding), RelativeSource={RelativeSource TemplatedParent}}"
+                                CacheMode="BitmapCache"
+                                Data="{Binding (attach:Attach_Icon.Geometry), RelativeSource={RelativeSource TemplatedParent}}"
+                                Fill="{TemplateBinding Foreground}"
+                                Stretch="Uniform" />
+                            <ContentPresenter
+                                Margin="{TemplateBinding Padding}"
+                                Content="{TemplateBinding Content}"
+                                TextElement.Foreground="{TemplateBinding Foreground}" />
+                        </StackPanel>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter Property="Foreground" Value="Red" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+
+
+    <!--  带有下划线 RadioButton  -->
+    <Style x:Key="RadioButton_BottomLine_Style" TargetType="{x:Type RadioButton}">
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="Foreground" Value="{StaticResource Common_Gray}" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Padding" Value="0,0,0,5" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RadioButton}">
+                    <ControlTemplate.Resources>
+                        <Storyboard x:Key="BorderCheckedStory">
+                            <DoubleAnimation
+                                Storyboard.TargetName="PART_Border"
+                                Storyboard.TargetProperty="Width"
+                                From="0"
+                                To="20"
+                                Duration="0:0:0.5" />
+                            <DoubleAnimation
+                                Storyboard.TargetName="PART_Border"
+                                Storyboard.TargetProperty="Opacity"
+                                From="0"
+                                To="1"
+                                Duration="0:0:0.5" />
+                        </Storyboard>
+                        <Storyboard x:Key="BorderUnCheckedStory">
+                            <DoubleAnimation
+                                Storyboard.TargetName="PART_Border"
+                                Storyboard.TargetProperty="Width"
+                                From="20"
+                                To="0"
+                                Duration="0:0:0.5" />
+                            <DoubleAnimation
+                                Storyboard.TargetName="PART_Border"
+                                Storyboard.TargetProperty="Opacity"
+                                From="1"
+                                To="0"
+                                Duration="0:0:0.5" />
+                        </Storyboard>
+                    </ControlTemplate.Resources>
+                    <local:SimplePanel>
+                        <ContentPresenter
+                            Margin="{TemplateBinding Padding}"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            Content="{TemplateBinding Content}"
+                            TextElement.Foreground="{TemplateBinding Foreground}" />
+                        <Border
+                            x:Name="PART_Border"
+                            HorizontalAlignment="Center"
+                            BorderBrush="Red"
+                            BorderThickness="0,0,0,2"
+                            Opacity="0" />
+                    </local:SimplePanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource BorderCheckedStory}" />
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard Storyboard="{StaticResource BorderUnCheckedStory}" />
+                            </Trigger.ExitActions>
+                            <Setter Property="FontSize" Value="16" />
+                            <Setter Property="Foreground" Value="{StaticResource Common_White}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  RadioButton 动画 三条竖线  -->
+    <Style x:Key="RadioButton3LineAnimation_Style" TargetType="{x:Type RadioButton}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RadioButton}">
+                    <ControlTemplate.Resources>
+                        <Storyboard
+                            x:Key="BorderCheckedStory"
+                            AutoReverse="True"
+                            RepeatBehavior="Forever">
+                            <DoubleAnimation
+                                Storyboard.TargetName="PART_Border1"
+                                Storyboard.TargetProperty="Height"
+                                From="0"
+                                To="16"
+                                Duration="0:0:0.3" />
+                            <DoubleAnimation
+                                Storyboard.TargetName="PART_Border1"
+                                Storyboard.TargetProperty="Opacity"
+                                From="0"
+                                To="1"
+                                Duration="0:0:0.3" />
+                            <DoubleAnimation
+                                BeginTime="0:0:0.3"
+                                Storyboard.TargetName="PART_Border2"
+                                Storyboard.TargetProperty="Height"
+                                From="0"
+                                To="10"
+                                Duration="0:0:0.5" />
+                            <DoubleAnimation
+                                BeginTime="0:0:0.3"
+                                Storyboard.TargetName="PART_Border2"
+                                Storyboard.TargetProperty="Opacity"
+                                From="0"
+                                To="1"
+                                Duration="0:0:0.5" />
+                            <DoubleAnimation
+                                BeginTime="0:0:0.5"
+                                Storyboard.TargetName="PART_Border3"
+                                Storyboard.TargetProperty="Height"
+                                From="0"
+                                To="16"
+                                Duration="0:0:0.8" />
+                            <DoubleAnimation
+                                BeginTime="0:0:0.5"
+                                Storyboard.TargetName="PART_Border3"
+                                Storyboard.TargetProperty="Opacity"
+                                From="0"
+                                To="1"
+                                Duration="0:0:0.8" />
+                        </Storyboard>
+                        <Storyboard x:Key="BorderUnCheckedStory">
+                            <DoubleAnimation
+                                Storyboard.TargetName="PART_Border1"
+                                Storyboard.TargetProperty="Height"
+                                To="0"
+                                Duration="0:0:0.5" />
+                            <DoubleAnimation
+                                Storyboard.TargetName="PART_Border1"
+                                Storyboard.TargetProperty="Opacity"
+                                From="1"
+                                To="0"
+                                Duration="0:0:0.5" />
+                            <DoubleAnimation
+                                Storyboard.TargetName="PART_Border2"
+                                Storyboard.TargetProperty="Height"
+                                To="0"
+                                Duration="0:0:0.5" />
+                            <DoubleAnimation
+                                Storyboard.TargetName="PART_Border2"
+                                Storyboard.TargetProperty="Opacity"
+                                From="1"
+                                To="0"
+                                Duration="0:0:0.5" />
+                            <DoubleAnimation
+                                Storyboard.TargetName="PART_Border3"
+                                Storyboard.TargetProperty="Height"
+                                To="0"
+                                Duration="0:0:0.5" />
+                            <DoubleAnimation
+                                Storyboard.TargetName="PART_Border3"
+                                Storyboard.TargetProperty="Opacity"
+                                From="1"
+                                To="0"
+                                Duration="0:0:0.5" />
+                        </Storyboard>
+                    </ControlTemplate.Resources>
+                    <local:SimplePanel x:Name="sp" Width="0">
+                        <Border
+                            x:Name="PART_Border1"
+                            Width="2"
+                            Height="0"
+                            Margin="0,0,10,0"
+                            Background="{StaticResource Common_Red}" />
+                        <Border
+                            x:Name="PART_Border2"
+                            Width="2"
+                            Height="0"
+                            Background="{StaticResource Common_Red}" />
+                        <Border
+                            x:Name="PART_Border3"
+                            Width="2"
+                            Height="0"
+                            Margin="10,0,0,0"
+                            Background="{StaticResource Common_Red}" />
+                    </local:SimplePanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="sp" Property="Width" Value="14" />
+                            <Trigger.EnterActions>
+                                <BeginStoryboard x:Name="BeginBorderCheckedStory" Storyboard="{StaticResource BorderCheckedStory}" />
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard x:Name="BeginBorderUnCheckedStory" Storyboard="{StaticResource BorderUnCheckedStory}" />
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="False">
+                            <Trigger.EnterActions>
+                                <RemoveStoryboard BeginStoryboardName="BeginBorderCheckedStory" />
+                                <RemoveStoryboard BeginStoryboardName="BeginBorderUnCheckedStory" />
+                            </Trigger.EnterActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  播放器详情选集按钮  -->
+    <Style x:Key="RadioButton_MovieSeries_Style" TargetType="{x:Type RadioButton}">
+        <Setter Property="Foreground" Value="{StaticResource Common_White}" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="attach:Attach_Border.CornerRadius" Value="4" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RadioButton}">
+                    <Border Background="{TemplateBinding Background}" CornerRadius="{Binding Path=(attach:Attach_Border.CornerRadius), RelativeSource={RelativeSource TemplatedParent}}">
+                        <local:SimplePanel>
+                            <ContentPresenter
+                                x:Name="PART_cp"
+                                Margin="{TemplateBinding Padding}"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                Content="{TemplateBinding Content}"
+                                TextElement.Foreground="{TemplateBinding Foreground}" />
+                            <RadioButton IsChecked="{TemplateBinding IsChecked}" Style="{StaticResource RadioButton3LineAnimation_Style}" />
+                        </local:SimplePanel>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Background" Value="#FF2B1010" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <Style BasedOn="{StaticResource RadioButtonBaseStyle}" TargetType="{x:Type RadioButton}" />
+</ResourceDictionary>

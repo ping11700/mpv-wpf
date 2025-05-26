@@ -1,0 +1,31 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+
+    <ResourceDictionary.MergedDictionaries>
+
+        <ResourceDictionary Source="pack://application:,,,/Controls;component/Control/_Style/ButtonStyle.xaml" />
+
+        <ResourceDictionary Source="pack://application:,,,/Controls;component/Control/_Style/CheckBoxStyle.xaml" />
+
+        <ResourceDictionary Source="pack://application:,,,/Controls;component/Control/_Style/ComboBoxStyle.xaml" />
+
+        <ResourceDictionary Source="pack://application:,,,/Controls;component/Control/_Style/ContextMenuStyle.xaml" />
+
+        <ResourceDictionary Source="pack://application:,,,/Controls;component/Control/_Style/ListBoxStyle.xaml" />
+
+        <ResourceDictionary Source="pack://application:,,,/Controls;component/Control/_Style/RadioButtonStyle.xaml" />
+
+        <ResourceDictionary Source="pack://application:,,,/Controls;component/Control/_Style/RepeatButtonStyle.xaml" />
+
+        <ResourceDictionary Source="pack://application:,,,/Controls;component/Control/_Style/ScrollBarStyle.xaml" />
+
+        <ResourceDictionary Source="pack://application:,,,/Controls;component/Control/_Style/SliderStyle.xaml" />
+
+        <ResourceDictionary Source="pack://application:,,,/Controls;component/Control/_Style/TextBoxStyle.xaml" />
+
+        <ResourceDictionary Source="pack://application:,,,/Controls;component/Control/_Style/ToggleButtonStyle.xaml" />
+
+        <ResourceDictionary Source="pack://application:,,,/Controls;component/Control/_Style/ToolTipStyle.xaml" />
+
+
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>

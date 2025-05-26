@@ -3,6 +3,12 @@
 
 public interface IPlayer 
 {
+
+    /// <summary>
+    ///  全屏
+    /// </summary>
+    bool IsFullScreen { get; set; }
+    
     /// <summary>
     /// 
     /// </summary>

@@ -1,0 +1,35 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:attach="clr-namespace:Controls.AttachedProperties">
+    <ResourceDictionary.MergedDictionaries>
+        <!--  资源集合  -->
+        <ResourceDictionary Source="pack://application:,,,/Controls;component/Resources/CommonResources.xaml" />
+        <!--  资源集合  -->
+    </ResourceDictionary.MergedDictionaries>
+
+
+    <Style TargetType="ToolTip">
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="MaxWidth" Value="300" />
+        <Setter Property="attach:Attach_Border.CornerRadius" Value="4" />
+        <Setter Property="BorderBrush" Value="Gray" />
+        <Setter Property="Padding" Value="5" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Background" Value="{StaticResource Common_Dark03}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Border
+                        Padding="{TemplateBinding Padding}"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding attach:Attach_Border.CornerRadius}">
+                        <TextBlock Text="{TemplateBinding ContentControl.Content}" TextWrapping="Wrap" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
