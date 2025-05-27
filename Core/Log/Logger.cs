@@ -2,11 +2,18 @@
 
 public class Logger
 {
-    public static string FilePath { get; set; } = $"{AppContext.BaseDirectory}mpv-wpf-{DateTime.Now:yyyy-MM-dd}.log";
+    public static string FilePath { get; set; }
 
     static Logger()
     {
-        FilePath = $"{AppDomain.CurrentDomain.BaseDirectory}{DateTime.Now:yyyy-MM-dd}.log";
+        var dir = $"{AppDomain.CurrentDomain.BaseDirectory}/logs";
+        if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
+                
+
+        System.Diagnostics.Trace.Listeners.Clear();  //清除系统监听器 (就是输出到Console的那个)
+        System.Diagnostics.Trace.Listeners.Add(new LogListener()); //添加Logger实例
+
+        FilePath = $"{dir}/app_{DateTime.Now:yyyy-MM-dd}.log";
 
         //只保留一天日志
         Task.Run(() =>

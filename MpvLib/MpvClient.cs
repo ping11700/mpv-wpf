@@ -1,6 +1,5 @@
 ﻿namespace MpvLib;
 
-
 public class MpvClient : IDisposable
 {
     public event Action<string[]>? ClientMessageEvent;            // client-message      MPV_EVENT_CLIENT_MESSAGE
@@ -183,8 +182,6 @@ public class MpvClient : IDisposable
     protected virtual void OnSeek() => SeekEvent?.Invoke();
     protected virtual void OnPlaybackRestart() => PlaybackRestartEvent?.Invoke();
 
-  
-    #region Commands
     public void Command(string command)
     {
         mpv_error err = mpv_command_string(Handle, command);
@@ -218,10 +215,6 @@ public class MpvClient : IDisposable
         if (err < 0)
             HandleError(err, "error executing command: " + string.Join("\n", args));
     }
-    #endregion
-
-
-    #region Property Getters/Setters  Observes
 
 
     public bool GetPropertyBool(string name)
@@ -442,15 +435,12 @@ public class MpvClient : IDisposable
         }
     }
 
-
-    #endregion
-
-
     private void HandleError(mpv_error err, string msg)
     {
         ErrorEvent?.Invoke($"Error: {GetError(err)}  Msg:{msg}");
 
-        Logger.Error($"Error: {GetError(err)}  Msg:{msg}");
+        //Terminal.WriteError(msg);
+        //Terminal.WriteError(GetError(err));
     }
 
 

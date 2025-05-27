@@ -1,8 +1,8 @@
 ﻿namespace Controls.Control;
+
 public class BaseAdorner : Adorner
 {
     private UIElement? _child;
-
     public BaseAdorner(UIElement adornedElement) : base(adornedElement)
     {
     }
@@ -19,6 +19,7 @@ public class BaseAdorner : Adorner
                 _child = value;
                 return;
             }
+            //AddVisualChild(new SimplePanel() { Background=new SolidColorBrush((Color)ColorConverter.ConvertFromString("#B3000000"))});
             AddVisualChild(value);
             _child = value;
         }
@@ -32,7 +33,7 @@ public class BaseAdorner : Adorner
         return finalSize;
     }
 
-    protected override System.Windows.Media.Visual GetVisualChild(int index)
+    protected override Visual GetVisualChild(int index)
     {
         if (index == 0 && _child != null) return _child;
         return base.GetVisualChild(index);

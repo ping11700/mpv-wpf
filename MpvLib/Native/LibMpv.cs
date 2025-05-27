@@ -1,8 +1,5 @@
 ﻿namespace MpvLib.Native;
 
-
-
-
 public static class LibMpv
 {
     [DllImport("libmpv-2.dll", CallingConvention = CallingConvention.Cdecl)]
@@ -21,7 +18,7 @@ public static class LibMpv
     public static extern mpv_error mpv_command(nint mpvHandle, nint strings);
 
     [DllImport("libmpv-2.dll", CallingConvention = CallingConvention.Cdecl)]
-    public static extern mpv_error mpv_command_string(nint mpvHandle, [MarshalAs(UnmanagedType.LPWStr)] string command);
+    public static extern mpv_error mpv_command_string(nint mpvHandle, [MarshalAs(UnmanagedType.AnsiBStr)] string command);
 
     [DllImport("libmpv-2.dll", CallingConvention = CallingConvention.Cdecl)]
     public static extern mpv_error mpv_command_ret(nint mpvHandle, nint strings, nint node);
@@ -33,7 +30,7 @@ public static class LibMpv
     public static extern nint mpv_error_string(mpv_error error);
 
     [DllImport("libmpv-2.dll", CallingConvention = CallingConvention.Cdecl)]
-    public static extern mpv_error mpv_request_log_messages(nint mpvHandle, [MarshalAs(UnmanagedType.LPWStr)] string min_level);
+    public static extern mpv_error mpv_request_log_messages(nint mpvHandle, [MarshalAs(UnmanagedType.AnsiBStr)] string min_level);
 
     [DllImport("libmpv-2.dll", CallingConvention = CallingConvention.Cdecl)]
     public static extern int mpv_set_option(nint mpvHandle, byte[] name, mpv_format format, ref long data);
@@ -57,7 +54,7 @@ public static class LibMpv
     public static extern mpv_error mpv_set_property(nint mpvHandle, byte[] name, mpv_format format, ref double data);
 
     [DllImport("libmpv-2.dll", CallingConvention = CallingConvention.Cdecl)]
-    public static extern mpv_error mpv_observe_property(nint mpvHandle, ulong reply_userdata, [MarshalAs(UnmanagedType.LPWStr)] string name, mpv_format format);
+    public static extern mpv_error mpv_observe_property(nint mpvHandle, ulong reply_userdata, [MarshalAs(UnmanagedType.AnsiBStr)] string name, mpv_format format);
 
     [DllImport("libmpv-2.dll", CallingConvention = CallingConvention.Cdecl)]
     public static extern int mpv_unobserve_property(nint mpvHandle, ulong registered_reply_userdata);

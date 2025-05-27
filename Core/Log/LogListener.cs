@@ -4,7 +4,7 @@
 public class LogListener : TraceListener
 {
     // level trace 日志 输出
-    public override void Write(string message)
+    public override void Write(string? message)
     {
 
 #if DEBUG 
@@ -19,13 +19,13 @@ public class LogListener : TraceListener
 
     }
 
-    public override void WriteLine(string message)
+    public override void WriteLine(string? message)
     {
         File.AppendAllText(Logger.FilePath, DateTime.Now.ToString("HH:mm:ss") + message + Environment.NewLine);
     }
 
 
-    public override void Write(object sender, string category)
+    public override void Write(object? sender, string? category)
     {
         string msg = "";
         if (string.IsNullOrWhiteSpace(category) == false) //category参数不为空

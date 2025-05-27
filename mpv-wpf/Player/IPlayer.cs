@@ -1,14 +1,14 @@
 ﻿namespace mpv_wpf.Player;
 
 
-public interface IPlayer 
+public interface IPlayer
 {
 
     /// <summary>
     ///  全屏
     /// </summary>
     bool IsFullScreen { get; set; }
-    
+
     /// <summary>
     /// 
     /// </summary>
@@ -81,8 +81,8 @@ public interface IPlayer
     /// 字幕字体大小
     /// </summary>
     int SubScale { set; }
- 
-     
+
+
     /// <summary>
     ///初始化 event
     /// </summary>

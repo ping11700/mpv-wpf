@@ -21,7 +21,7 @@ public class Util_IO
 
 
     public const string SubtitleFilters = "*.srt;*.ass;*.idx;*.sub;*.sup;*.ttxt;*.txt;*.ssa;*.smi;*.mks;";
- 
+
 
 
     /// <summary>

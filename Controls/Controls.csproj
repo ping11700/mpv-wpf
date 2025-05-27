@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
+	<TargetFrameworks>$(MainTargetFrameworks)</TargetFrameworks>
+	<Nullable>enable</Nullable>
 	<BaseOutputPath>..\bin\</BaseOutputPath>
 	<OutputType>Library</OutputType>
 	<UseWPF>true</UseWPF>

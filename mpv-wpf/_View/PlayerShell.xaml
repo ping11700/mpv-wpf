@@ -13,8 +13,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="clr-namespace:mpv_wpf._Model"
     xmlns:vm="clr-namespace:mpv_wpf._ViewModel"
-    Width="1200"
-    Height="800"
+    Width="800"
+    Height="520"
+    d:DataContext="{d:DesignInstance {x:Type vm:ViewModel_PlayerBase}}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     Background="Transparent"
@@ -42,106 +43,55 @@
             <!--  视频  -->
             <hwnd:VideoHwndHost
                 x:Name="VideoHwndHost"
-                Width="{Binding ActualWidth, ElementName=ContentPresent, Mode=OneWay}"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Stretch" />
+                Width="{Binding ActualWidth, ElementName=Content_SimplePanel, Mode=OneWay}"
+                HorizontalAlignment="Left" />
         </hwnd:HwndHostPresenter.HwndHost>
         <hwnd:HwndHostPresenter.Adornment>
             <!--  替代window中Adorner  -->
             <AdornerDecorator>
-                <Grid x:Name="ROOT_Grid" Visibility="{Binding IPlayer.IsPrePlay, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource InverseBool2VisibilityConverter}}">
+                <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition Width="auto" />
                     </Grid.ColumnDefinitions>
-                    <!--  上部功能区  -->
-                    <control:SimplePanel
-                        x:Name="TopFunc_SimplePanel"
+
+                    <local:UserControl_TopFunc
+                        x:Name="TopFunc_UC"
                         Grid.ColumnSpan="2"
-                        Height="120"
-                        VerticalAlignment="Top">
-                        <!--  底板  -->
-                        <Border CornerRadius="12,12,0,0">
-                            <Border.Background>
-                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                    <GradientStop Offset="0.0" Color="#ee000000" />
-                                    <GradientStop Offset="1.0" Color="#00000000" />
-                                </LinearGradientBrush>
-                            </Border.Background>
-                        </Border>
+                        VerticalAlignment="Top" />
 
-                        <!--  视频标题  -->
+                    <control:SimplePanel x:Name="Content_SimplePanel" Grid.Column="0">
+
+                        <!--  下部功能区  -->
+                        <local:UserControl_BottomFunc x:Name="BottomFunc_UC" VerticalAlignment="Bottom" />
+
+                        <!--  左下角  文字提示 动画  -->
                         <TextBlock
-                            MaxWidth="200"
-                            Margin="0,10"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Top"
-                            d:Text="@123"
-                            FontSize="16"
-                            Foreground="{StaticResource Common_White}"
-                            Text="{Binding VideoTitle, Mode=OneWay}"
-                            TextTrimming="CharacterEllipsis" />
-
-                        <!--  窗体功能区  -->
-                        <StackPanel
-                            x:Name="Operate_StackPanel"
-                            Margin="10"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Top"
-                            Orientation="Horizontal">
-
-                            <!--  设置  -->
-                            <Button
-                                Margin="0,0,12,0"
-                                attach:Attach_Icon.Geometry="{StaticResource SettingGeometry}"
-                                Command="{x:Static command:ControlCommands.Setting}"
-                                Style="{StaticResource ButtonPathStyle}"
-                                ToolTip="设置" />
-
-                            <!--  置顶  -->
-                            <ToggleButton
-                                x:Name="Fix_Tog"
-                                Margin="0,0,12,0"
-                                attach:Attach_Icon.Geometry="{StaticResource FixGeometry}"
-                                attach:Attach_Icon.Height="12"
-                                attach:Attach_Icon.Width="12"
-                                attach:Attach_IconSwitch.SelectedGeometry="{StaticResource FixedGeometry}"
-                                Command="{x:Static command:ControlCommands.Fix}"
-                                Style="{StaticResource ToggleButtonPathSwitchStyle}"
-                                ToolTip="置顶" />
-
-                            <!--  最小化  -->
-                            <Button
-                                Margin="0,0,12,0"
-                                attach:Attach_Icon.Geometry="{StaticResource MinGeometry}"
-                                Command="{x:Static command:ControlCommands.Min}"
-                                Style="{StaticResource ButtonPathStyle}" />
-
-                            <!--  最大化/Normal  -->
-                            <Button
-                                x:Name="Max_Normal_Btn"
-                                Margin="0,0,12,0"
-                                attach:Attach_Icon.Geometry="{StaticResource MaxGeometry}"
-                                Command="{x:Static command:ControlCommands.Max_normal}"
-                                Style="{StaticResource ButtonPathStyle}" />
+                            x:Name="Tips_TextBlock"
+                            Margin="10,0,0,60"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Bottom"
+                            DataContext="{Binding Tips, Mode=OneWay}"
+                            Opacity="0.0">
+                            <Run Foreground="White" Text="{Binding DataContext[0], Mode=OneWay, RelativeSource={RelativeSource AncestorType=TextBlock}}" />
+                            <Run Foreground="Red" Text="{Binding DataContext[1], Mode=OneWay, RelativeSource={RelativeSource AncestorType=TextBlock}}" />
+                        </TextBlock>
+                        <!--  文字提示 结束  -->
 
 
-                            <!--  关闭  -->
-                            <Button
-                                attach:Attach_Icon.Geometry="{StaticResource CloseGeometry}"
-                                Command="{x:Static command:ControlCommands.Close}"
-                                Style="{StaticResource ButtonPathStyle}" />
-                        </StackPanel>
+                        <!--  缓冲提示  -->
+                        <control:BusyBox Width="60" Height="60">
+                            <control:BusyBox.Style>
+                                <Style BasedOn="{StaticResource {x:Type control:BusyBox}}" TargetType="{x:Type control:BusyBox}">
+                                    <Setter Property="IsActive" Value="{Binding IsLoading, Mode=OneWay}" />
+                                    <Setter Property="IsActive" Value="{Binding IPlayer.IsLoading, Mode=OneWay}" />
+                                </Style>
+                            </control:BusyBox.Style>
+                        </control:BusyBox>
+                        <!--  缓冲提示  -->
                     </control:SimplePanel>
-                    <!--  上部功能区  -->
 
-                    <!--  下部功能区  -->
-                    <local:UserControl_BottomFunc
-                        x:Name="BottomFunc_UC"
-                        Height="120"
-                        VerticalAlignment="Bottom"
-                        VerticalContentAlignment="Bottom"
-                        attach:Attach_Border.CornerRadius="0,0,12,12" />
+
 
 
 
@@ -155,45 +105,7 @@
                         attach:Attach_IconSwitch.Geometry="{StaticResource LeftGeometry}"
                         attach:Attach_IconSwitch.SelectedGeometry="{StaticResource RightGeometry}"
                         Command="{x:Static command:ControlCommands.ToggleDrawer}"
-                        Style="{StaticResource ToggleButtonPathSwitchStyle}">
-                        <!--  操作日志  -->
-                        <command:AttachCommand.AttachTarget>
-                            <command:EventMethod
-                                AttachEventName="Click"
-                                CommandParameter="{Binding IsChecked, Mode=OneWay, RelativeSource={RelativeSource AncestorType=ToggleButton}}"
-                                DoCommand="{Binding TogDrawerOperateCmd, Mode=OneWay}" />
-                        </command:AttachCommand.AttachTarget>
-                    </ToggleButton>
-
-
-                    <!--  业务内容  -->
-                    <ContentPresenter x:Name="ContentPresent" />
-
-
-                    <!--  左下角  文字提示 动画  -->
-                    <TextBlock
-                        x:Name="Tips_TextBlock"
-                        Margin="10,0,0,60"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Bottom"
-                        DataContext="{Binding Tips, Mode=OneWay}"
-                        Opacity="0.0">
-                        <Run Foreground="White" Text="{Binding DataContext[0], Mode=OneWay, RelativeSource={RelativeSource AncestorType=TextBlock}}" />
-                        <Run Foreground="Red" Text="{Binding DataContext[1], Mode=OneWay, RelativeSource={RelativeSource AncestorType=TextBlock}}" />
-                    </TextBlock>
-                    <!--  文字提示 结束  -->
-
-
-                    <!--  缓冲提示  -->
-                    <control:BusyBox Width="60" Height="60">
-                        <control:BusyBox.Style>
-                            <Style BasedOn="{StaticResource {x:Type control:BusyBox}}" TargetType="{x:Type control:BusyBox}">
-                                <Setter Property="IsActive" Value="{Binding IsLoading, Mode=OneWay}" />
-                                <Setter Property="IsActive" Value="{Binding IPlayer.IsLoading, Mode=OneWay}" />
-                            </Style>
-                        </control:BusyBox.Style>
-                    </control:BusyBox>
-                    <!--  缓冲提示  -->
+                        Style="{StaticResource ToggleButtonPathSwitchStyle}" />
 
 
                     <!--  抽屉  -->

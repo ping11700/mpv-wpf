@@ -1,4 +1,4 @@
-﻿ namespace mpv_wpf._View;
+﻿namespace mpv_wpf._View;
 
 /// <summary>
 /// 视频播放器 专用窗体 Base
@@ -111,7 +111,7 @@ public abstract class BasePlayerWindow : BaseWindowChrome
     protected virtual void Setting(object sender, ExecutedRoutedEventArgs e) { }
 
 
-     
+
 
     #region FullScreen
 

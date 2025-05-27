@@ -8,7 +8,7 @@ public partial class UserControl_BottomFunc
 
     public UserControl_BottomFunc() => InitializeComponent();
 
-     
+
 
 
 

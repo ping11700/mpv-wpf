@@ -41,12 +41,21 @@ public partial class Player : MpvClient
         if (formHandle != IntPtr.Zero)
             SetPropertyLong("wid", formHandle.ToInt64());
 
+     
+
+        SetPropertyString("log-file", $"{AppContext.BaseDirectory}logs/mpv_{DateTime.Today:yyyy-MM-dd}.log");//log
+        //SetPropertyString("msg-level", "all=warn");
+
+
+        SetPropertyString("config-dir", $"{AppContext.BaseDirectory}portable_config");
+        SetPropertyString("config", "yes");
+
+        SetPropertyString("profile", "fast");
         SetPropertyString("hwdec", "auto");
         SetPropertyString("vo", "gpu");//视频输出驱动 
-        SetPropertyString("vd-lavc-dr", "auto");//是否直接解码到显存，个别低端英特尔处理器可能需要显式禁用此功能以大幅提速解码
 
 
-        SetPropertyString("title", "南瓜播放器");
+        SetPropertyString("title", "MPV-wpf播放器");
         SetPropertyInt("volume-max", 100);
         SetPropertyInt("volume", 50);
         SetPropertyString("cache", "yes");
@@ -63,21 +72,9 @@ public partial class Player : MpvClient
         SetPropertyInt("sub-scale", 1);
         SetPropertyInt("sub-pos", 100);
         SetPropertyString("sub-scale-by-window", "yes");
-
-        //SetProperty("loop-playlist", tag);
-        //SetPropertyString("video-rotate", "270");
-
-        SetPropertyString("log-file", $"{AppContext.BaseDirectory}logs/mpv_{DateTime.Today:yyyy-MM-dd}.log");//log
-
-        SetPropertyString("config-dir", $"{AppContext.BaseDirectory}portable_config");
-        SetPropertyString("config", "yes");
-
         SetPropertyString("load-scripts", "yes");
 
         mpv_error err = mpv_initialize(MainHandle);
-
-
-
         if (err < 0)
             throw new Exception("mpv_initialize error" + "\n\n" + GetError(err) + "\n");
 
@@ -89,7 +86,7 @@ public partial class Player : MpvClient
         if (Handle == IntPtr.Zero)
             throw new Exception("mpv_create_client error");
 
-        mpv_request_log_messages(Handle, "info");
+        mpv_request_log_messages(Handle, "info");//监听log
 
         if (formHandle != IntPtr.Zero) Util.Run(EventLoop);
 
@@ -130,7 +127,7 @@ public partial class Player : MpvClient
         }
     }
 
-  
+
     protected override void OnShutdown()
     {
         //IsQuitNeeded = false;
@@ -174,7 +171,7 @@ public partial class Player : MpvClient
     // executed after OnStartFile
     protected override void OnFileLoaded()
     {
-        Util.Run(UpdateTracks);
+        //Util.Run(UpdateTracks);
 
         base.OnFileLoaded();
     }
@@ -197,7 +194,6 @@ public partial class Player : MpvClient
         }
     }
 
-    public void SetBluRayTitle(int id) => LoadFiles([@"bd://" + id], false);
 
 
     public void LoadFiles(string[]? files, bool append)
@@ -269,30 +265,17 @@ public partial class Player : MpvClient
         return path;
     }
 
+
+
+
     public void LoadBluRayISO(string path)
     {
         Command("stop");
         Thread.Sleep(500);
         SetPropertyString("bluray-device", path);
-        LoadFiles(new[] { @"bd://" }, false);
+        LoadFiles([@"bd://"], false);
     }
 
-    public void LoadDiskFolder(string path)
-    {
-        Command("stop");
-        Thread.Sleep(500);
-
-        if (Directory.Exists(path + "\\BDMV"))
-        {
-            SetPropertyString("bluray-device", path);
-            LoadFiles(new[] { @"bd://" }, false);
-        }
-        else
-        {
-            SetPropertyString("dvd-device", path);
-            LoadFiles(new[] { @"dvd://" }, false);
-        }
-    }
 
 
     public void LoadFolder()
@@ -300,9 +283,7 @@ public partial class Player : MpvClient
         //if (!App.AutoLoadFolder)
         //    return;
 
-
         return;
-
         Thread.Sleep(1000);
 
         lock (_loadFolderLockObject)
@@ -348,65 +329,10 @@ public partial class Player : MpvClient
     }
 
 
-    //public static string GetShortcutTarget(string path)
-    //{
-    //    Type? t = Type.GetTypeFromProgID("WScript.Shell");
-    //    dynamic? sh = Activator.CreateInstance(t!);
-    //    return sh?.CreateShortcut(path).TargetPath!;
-    //}
 
-    static string GetLanguage(string id)
-    {
-        foreach (CultureInfo ci in CultureInfo.GetCultures(CultureTypes.NeutralCultures))
-            if (ci.ThreeLetterISOLanguageName == id || Convert(ci.ThreeLetterISOLanguageName) == id)
-                return ci.EnglishName;
 
-        return id;
 
-        static string Convert(string id2) => id2 switch
-        {
-            "bng" => "ben",
-            "ces" => "cze",
-            "deu" => "ger",
-            "ell" => "gre",
-            "eus" => "baq",
-            "fra" => "fre",
-            "hye" => "arm",
-            "isl" => "ice",
-            "kat" => "geo",
-            "mya" => "bur",
-            "nld" => "dut",
-            "sqi" => "alb",
-            "zho" => "chi",
-            _ => id2,
-        };
-    }
 
-    static string GetNativeLanguage(string name)
-    {
-        foreach (CultureInfo ci in CultureInfo.GetCultures(CultureTypes.NeutralCultures))
-            if (ci.EnglishName == name)
-                return ci.NativeName;
-
-        return name;
-    }
-
-    public void UpdateTracks()
-    {
-        string path = GetPropertyString("path");
-
-        if (!path.ToLowerEx().StartsWithEx("bd://"))
-            lock (BluRayTitles)
-                BluRayTitles.Clear();
-
-        lock (MediaTracksLock)
-        {
-            if (/*App.MediaInfo*/ true && !path.Contains("://") && !path.Contains(@"\\.\pipe\") && File.Exists(path))
-                MediaTracks = GetMediaInfoTracks(path);
-            else
-                MediaTracks = GetTracks();
-        }
-    }
 
     public List<(string, string)> AudioDevices
     {
@@ -427,409 +353,9 @@ public partial class Player : MpvClient
         }
     }
 
-    public List<Chapter> GetChapters()
-    {
-        var chapters = new List<Chapter>();
-        int count = GetPropertyInt("chapter-list/count");
 
-        for (int x = 0; x < count; x++)
-        {
-            string title = GetPropertyString($"chapter-list/{x}/title");
-            double time = GetPropertyDouble($"chapter-list/{x}/time");
 
-            if (string.IsNullOrEmpty(title) ||
-                (title.Length == 12 && title.Contains(':') && title.Contains('.')))
 
-                title = "Chapter " + (x + 1);
-
-            chapters.Add(new Chapter() { Title = title, Time = time });
-        }
-
-        return chapters;
-    }
-
-    public void UpdateExternalTracks()
-    {
-        int trackListTrackCount = GetPropertyInt("track-list/count");
-        int editionCount = GetPropertyInt("edition-list/count");
-        int count = MediaTracks.Where(i => i.Type != "g").Count();
-
-        lock (MediaTracksLock)
-        {
-            if (count != (trackListTrackCount + editionCount))
-            {
-                MediaTracks = MediaTracks.Where(i => !i.External).ToList();
-                MediaTracks.AddRange(GetTracks(false));
-            }
-        }
-    }
-
-    public List<MediaTrack> GetTracks(bool includeInternal = true, bool includeExternal = true)
-    {
-        var tracks = new List<MediaTrack>();
-
-        int trackCount = GetPropertyInt("track-list/count");
-
-        for (int i = 0; i < trackCount; i++)
-        {
-            bool external = GetPropertyBool($"track-list/{i}/external");
-
-            if ((external && !includeExternal) || (!external && !includeInternal))
-                continue;
-
-            string type = GetPropertyString($"track-list/{i}/type");
-            string filename = GetPropertyString($"filename/no-ext");
-            string title = GetPropertyString($"track-list/{i}/title").Replace(filename, "");
-
-            title = Regex.Replace(title, @"^[\._\-]", "");
-
-            if (type == "video")
-            {
-                string codec = GetPropertyString($"track-list/{i}/codec").ToUpperEx();
-                if (codec == "MPEG2VIDEO")
-                    codec = "MPEG2";
-                else if (codec == "DVVIDEO")
-                    codec = "DV";
-                MediaTrack track = new MediaTrack();
-                Add(track, codec);
-                Add(track, GetPropertyString($"track-list/{i}/demux-w") + "x" + GetPropertyString($"track-list/{i}/demux-h"));
-                Add(track, GetPropertyString($"track-list/{i}/demux-fps").Replace(".000000", "") + " FPS");
-                Add(track, GetPropertyBool($"track-list/{i}/default") ? "Default" : null);
-                track.Text = "V: " + track.Text.Trim(' ', ',');
-                track.Type = "v";
-                track.ID = GetPropertyInt($"track-list/{i}/id");
-                tracks.Add(track);
-            }
-            else if (type == "audio")
-            {
-                string codec = GetPropertyString($"track-list/{i}/codec").ToUpperEx();
-                if (codec.Contains("PCM"))
-                    codec = "PCM";
-                MediaTrack track = new MediaTrack();
-                Add(track, GetLanguage(GetPropertyString($"track-list/{i}/lang")));
-                Add(track, codec);
-                Add(track, GetPropertyInt($"track-list/{i}/audio-channels") + " ch");
-                Add(track, GetPropertyInt($"track-list/{i}/demux-samplerate") / 1000 + " kHz");
-                Add(track, GetPropertyBool($"track-list/{i}/forced") ? "Forced" : null);
-                Add(track, GetPropertyBool($"track-list/{i}/default") ? "Default" : null);
-                Add(track, GetPropertyBool($"track-list/{i}/external") ? "External" : null);
-                Add(track, title);
-                track.Text = "A: " + track.Text.Trim(' ', ',');
-                track.Type = "a";
-                track.ID = GetPropertyInt($"track-list/{i}/id");
-                track.External = external;
-                tracks.Add(track);
-            }
-            else if (type == "sub")
-            {
-                string codec = GetPropertyString($"track-list/{i}/codec").ToUpperEx();
-                if (codec.Contains("PGS"))
-                    codec = "PGS";
-                else if (codec == "SUBRIP")
-                    codec = "SRT";
-                else if (codec == "WEBVTT")
-                    codec = "VTT";
-                else if (codec == "DVB_SUBTITLE")
-                    codec = "DVB";
-                else if (codec == "DVD_SUBTITLE")
-                    codec = "VOB";
-                MediaTrack track = new MediaTrack();
-                Add(track, GetLanguage(GetPropertyString($"track-list/{i}/lang")));
-                Add(track, codec);
-                Add(track, GetPropertyBool($"track-list/{i}/forced") ? "Forced" : null);
-                Add(track, GetPropertyBool($"track-list/{i}/default") ? "Default" : null);
-                Add(track, GetPropertyBool($"track-list/{i}/external") ? "External" : null);
-                Add(track, title);
-                track.Text = "S: " + track.Text.Trim(' ', ',');
-                track.Type = "s";
-                track.ID = GetPropertyInt($"track-list/{i}/id");
-                track.External = external;
-                tracks.Add(track);
-            }
-        }
-
-        if (includeInternal)
-        {
-            int editionCount = GetPropertyInt("edition-list/count");
-
-            for (int i = 0; i < editionCount; i++)
-            {
-                string title = GetPropertyString($"edition-list/{i}/title");
-
-                if (string.IsNullOrEmpty(title))
-                    title = "Edition " + i;
-
-                MediaTrack track = new MediaTrack
-                {
-                    Text = "E: " + title,
-                    Type = "e",
-                    ID = i
-                };
-
-                tracks.Add(track);
-            }
-        }
-
-        return tracks;
-
-        static void Add(MediaTrack track, object? value)
-        {
-            string str = (value + "").Trim();
-
-            if (str != "" && !track.Text.Contains(str))
-                track.Text += " " + str + ",";
-        }
-    }
-
-    public List<MediaTrack> GetMediaInfoTracks(string path)
-    {
-        List<MediaTrack> tracks = new List<MediaTrack>();
-
-        using (MediaInfo mi = new MediaInfo(path))
-        {
-            MediaTrack track = new MediaTrack();
-            Add(track, mi.GetGeneral("Format"));
-            Add(track, mi.GetGeneral("FileSize/String"));
-            Add(track, mi.GetGeneral("Duration/String"));
-            Add(track, mi.GetGeneral("OverallBitRate/String"));
-            track.Text = "G: " + track.Text.Trim(' ', ',');
-            track.Type = "g";
-            tracks.Add(track);
-
-            int videoCount = mi.GetCount(MediaInfoStreamKind.Video);
-
-            for (int i = 0; i < videoCount; i++)
-            {
-                string fps = mi.GetVideo(i, "FrameRate");
-
-                if (float.TryParse(fps, NumberStyles.Float, CultureInfo.InvariantCulture, out float result))
-                    fps = result.ToString(CultureInfo.InvariantCulture);
-
-                track = new MediaTrack();
-                Add(track, mi.GetVideo(i, "Format"));
-                Add(track, mi.GetVideo(i, "Format_Profile"));
-                Add(track, mi.GetVideo(i, "Width") + "x" + mi.GetVideo(i, "Height"));
-                Add(track, mi.GetVideo(i, "BitRate/String"));
-                Add(track, fps + " FPS");
-                Add(track, (videoCount > 1 && mi.GetVideo(i, "Default") == "Yes") ? "Default" : "");
-                track.Text = "V: " + track.Text.Trim(' ', ',');
-                track.Type = "v";
-                track.ID = i + 1;
-                tracks.Add(track);
-            }
-
-            int audioCount = mi.GetCount(MediaInfoStreamKind.Audio);
-
-            for (int i = 0; i < audioCount; i++)
-            {
-                string lang = mi.GetAudio(i, "Language/String");
-                string nativeLang = GetNativeLanguage(lang);
-                string? title = mi.GetAudio(i, "Title");
-                string format = mi.GetAudio(i, "Format");
-
-                if (!string.IsNullOrEmpty(title))
-                {
-                    if (title.Contains("DTS-HD MA"))
-                        format = "DTS-MA";
-
-                    if (title.Contains("DTS-HD MA"))
-                        title = title.Replace("DTS-HD MA", "");
-
-                    if (title.ContainsEx("Blu-ray"))
-                        title = title.Replace("Blu-ray", "");
-
-                    if (title.ContainsEx("UHD "))
-                        title = title.Replace("UHD ", "");
-
-                    if (title.ContainsEx("EAC"))
-                        title = title.Replace("EAC", "E-AC");
-
-                    if (title.ContainsEx("AC3"))
-                        title = title.Replace("AC3", "AC-3");
-
-                    if (title.ContainsEx(lang))
-                        title = title.Replace(lang, "").Trim();
-
-                    if (title.ContainsEx(nativeLang))
-                        title = title.Replace(nativeLang, "").Trim();
-
-                    if (title.ContainsEx("Surround"))
-                        title = title.Replace("Surround", "");
-
-                    if (title.ContainsEx("Dolby Digital"))
-                        title = title.Replace("Dolby Digital", "");
-
-                    if (title.ContainsEx("Stereo"))
-                        title = title.Replace("Stereo", "");
-
-                    if (title.StartsWithEx(format + " "))
-                        title = title.Replace(format + " ", "");
-
-                    foreach (string i2 in new[] { "2.0", "5.1", "6.1", "7.1" })
-                        if (title.ContainsEx(i2))
-                            title = title.Replace(i2, "").Trim();
-
-                    if (title.ContainsEx("@ "))
-                        title = title.Replace("@ ", "");
-
-                    if (title.ContainsEx(" @"))
-                        title = title.Replace(" @", "");
-
-                    if (title.ContainsEx("()"))
-                        title = title.Replace("()", "");
-
-                    if (title.ContainsEx("[]"))
-                        title = title.Replace("[]", "");
-
-                    if (title.TrimEx() == format)
-                        title = null;
-
-                    if (!string.IsNullOrEmpty(title))
-                        title = title.Trim(" _-".ToCharArray());
-                }
-
-                track = new MediaTrack();
-                Add(track, lang);
-                Add(track, format);
-                Add(track, mi.GetAudio(i, "Format_Profile"));
-                Add(track, mi.GetAudio(i, "BitRate/String"));
-                Add(track, mi.GetAudio(i, "Channel(s)") + " ch");
-                Add(track, mi.GetAudio(i, "SamplingRate/String"));
-                Add(track, mi.GetAudio(i, "Forced") == "Yes" ? "Forced" : "");
-                Add(track, (audioCount > 1 && mi.GetAudio(i, "Default") == "Yes") ? "Default" : "");
-                Add(track, title);
-
-                if (track.Text.Contains("MPEG Audio, Layer 2"))
-                    track.Text = track.Text.Replace("MPEG Audio, Layer 2", "MP2");
-
-                if (track.Text.Contains("MPEG Audio, Layer 3"))
-                    track.Text = track.Text.Replace("MPEG Audio, Layer 2", "MP3");
-
-                track.Text = "A: " + track.Text.Trim(' ', ',');
-                track.Type = "a";
-                track.ID = i + 1;
-                tracks.Add(track);
-            }
-
-            int subCount = mi.GetCount(MediaInfoStreamKind.Text);
-
-            for (int i = 0; i < subCount; i++)
-            {
-                string codec = mi.GetText(i, "Format").ToUpperEx();
-
-                if (codec == "UTF-8")
-                    codec = "SRT";
-                else if (codec == "WEBVTT")
-                    codec = "VTT";
-                else if (codec == "VOBSUB")
-                    codec = "VOB";
-
-                string lang = mi.GetText(i, "Language/String");
-                string nativeLang = GetNativeLanguage(lang);
-                string title = mi.GetText(i, "Title");
-                bool forced = mi.GetText(i, "Forced") == "Yes";
-
-                if (!string.IsNullOrEmpty(title))
-                {
-                    if (title.ContainsEx("VobSub"))
-                        title = title.Replace("VobSub", "VOB");
-
-                    if (title.ContainsEx(codec))
-                        title = title.Replace(codec, "");
-
-                    if (title.ContainsEx(lang.ToLowerEx()))
-                        title = title.Replace(lang.ToLowerEx(), lang);
-
-                    if (title.ContainsEx(nativeLang.ToLowerEx()))
-                        title = title.Replace(nativeLang.ToLowerEx(), nativeLang).Trim();
-
-                    if (title.ContainsEx(lang))
-                        title = title.Replace(lang, "");
-
-                    if (title.ContainsEx(nativeLang))
-                        title = title.Replace(nativeLang, "").Trim();
-
-                    if (title.ContainsEx("full"))
-                        title = title.Replace("full", "").Trim();
-
-                    if (title.ContainsEx("Full"))
-                        title = title.Replace("Full", "").Trim();
-
-                    if (title.ContainsEx("Subtitles"))
-                        title = title.Replace("Subtitles", "").Trim();
-
-                    if (title.ContainsEx("forced"))
-                        title = title.Replace("forced", "Forced").Trim();
-
-                    if (forced && title.ContainsEx("Forced"))
-                        title = title.Replace("Forced", "").Trim();
-
-                    if (title.ContainsEx("()"))
-                        title = title.Replace("()", "");
-
-                    if (title.ContainsEx("[]"))
-                        title = title.Replace("[]", "");
-
-                    if (!string.IsNullOrEmpty(title))
-                        title = title.Trim(" _-".ToCharArray());
-                }
-
-                track = new MediaTrack();
-                Add(track, lang);
-                Add(track, codec);
-                Add(track, mi.GetText(i, "Format_Profile"));
-                Add(track, forced ? "Forced" : "");
-                Add(track, (subCount > 1 && mi.GetText(i, "Default") == "Yes") ? "Default" : "");
-                Add(track, title);
-                track.Text = "S: " + track.Text.Trim(' ', ',');
-                track.Type = "s";
-                track.ID = i + 1;
-                tracks.Add(track);
-            }
-        }
-
-        int editionCount = GetPropertyInt("edition-list/count");
-
-        for (int i = 0; i < editionCount; i++)
-        {
-            string title = GetPropertyString($"edition-list/{i}/title");
-
-            if (string.IsNullOrEmpty(title))
-                title = "Edition " + i;
-
-            MediaTrack track = new MediaTrack
-            {
-                Text = "E: " + title,
-                Type = "e",
-                ID = i
-            };
-
-            tracks.Add(track);
-        }
-
-        return tracks;
-
-        static void Add(MediaTrack track, object? value)
-        {
-            string str = value?.ToString()?.Trim() ?? "";
-
-            if (str != "" && !(track.Text != null && track.Text.Contains(str)))
-                track.Text += " " + str + ",";
-        }
-    }
-
-
-    public MpvClient CreateNewPlayer(string name)
-    {
-        var client = new MpvClient { Handle = mpv_create_client(MainHandle, name) };
-
-        if (client.Handle == IntPtr.Zero)
-            throw new Exception("Error CreateNewPlayer");
-
-        Util.Run(client.EventLoop);
-        Clients.Add(client);
-        return client;
-    }
 
 
     public override void Dispose()

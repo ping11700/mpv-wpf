@@ -1,0 +1,210 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:command="clr-namespace:Controls.Command"
+    xmlns:converter="clr-namespace:Controls.Converters"
+    xmlns:local="clr-namespace:Controls.Control"
+    xmlns:o="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
+    <Color x:Key="LightPrimaryColor">#f3fbff</Color>
+    <Color x:Key="PrimaryColor">#326cf3</Color>
+    <Color x:Key="DarkPrimaryColor">#326cf3</Color>
+    <Color x:Key="SecondaryRegionColor">#eeeeee</Color>
+    <Color x:Key="BorderColor">#e0e0e0</Color>
+    <SolidColorBrush
+        x:Key="BorderBrush"
+        o:Freeze="True"
+        Color="{DynamicResource BorderColor}" />
+    <SolidColorBrush
+        x:Key="SecondaryRegionBrush"
+        o:Freeze="True"
+        Color="{DynamicResource SecondaryRegionColor}" />
+    <LinearGradientBrush x:Key="PrimaryBrush" o:Freeze="True" StartPoint="0,0" EndPoint="1,0">
+        <GradientStop o:Freeze="True" Offset="0" Color="{DynamicResource PrimaryColor}" />
+        <GradientStop o:Freeze="True" Offset="1" Color="{DynamicResource DarkPrimaryColor}" />
+    </LinearGradientBrush>
+    <ControlTemplate x:Key="PreviewSliderThumb" TargetType="Thumb">
+        <Border
+            Name="BorderDot"
+            Width="12"
+            Height="12"
+            Margin="-6,0"
+            Background="White"
+            CornerRadius="6" />
+        <ControlTemplate.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:PlayerSlider}}, Path=Orientation}" Value="Vertical">
+                <Setter TargetName="BorderDot" Property="Margin" Value="0,-6" />
+            </DataTrigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+
+
+
+    <!--  竖直  -->
+    <Style x:Key="PreviewSliderRepeatButtonVerticalStyle" TargetType="RepeatButton">
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Focusable" Value="false" />
+        <Setter Property="IsTabStop" Value="false" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RepeatButton">
+                    <Border Background="Transparent">
+                        <Border
+                            Height="{Binding TrackHeight, Mode=OneTime, RelativeSource={RelativeSource AncestorType=local:PlayerSlider}}"
+                            Margin="2,0"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="1" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <!--  水平  -->
+    <Style x:Key="PreviewSliderRepeatButtonHorizontalStyle" TargetType="RepeatButton">
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="IsTabStop" Value="false" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RepeatButton">
+                    <Border
+                        Height="{Binding TrackHeight, Mode=OneWay, RelativeSource={RelativeSource AncestorType=local:PlayerSlider}}"
+                        Margin="0,2"
+                        Background="{TemplateBinding Background}"
+                        CornerRadius="1" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+
+
+    <!--  竖直  -->
+    <ControlTemplate x:Key="PreviewSliderVertical" TargetType="{x:Type local:PlayerSlider}">
+        <local:SimplePanel>
+            <Track Value="{TemplateBinding CacheValue}">
+                <Track.DecreaseRepeatButton>
+                    <RepeatButton
+                        Width="{TemplateBinding TrackHeight}"
+                        Background="{TemplateBinding CacheBackground}"
+                        Style="{StaticResource PreviewSliderRepeatButtonVerticalStyle}" />
+                </Track.DecreaseRepeatButton>
+                <Track.IncreaseRepeatButton>
+                    <RepeatButton
+                        Width="{TemplateBinding TrackHeight}"
+                        Background="{TemplateBinding NotyetBackground}"
+                        BorderThickness="0"
+                        Style="{StaticResource PreviewSliderRepeatButtonVerticalStyle}" />
+                </Track.IncreaseRepeatButton>
+            </Track>
+            <Track x:Name="PART_Track" HorizontalAlignment="center">
+                <Track.DecreaseRepeatButton>
+                    <RepeatButton
+                        Width="{TemplateBinding TrackHeight}"
+                        Background="{TemplateBinding PastBackground}"
+                        Command="{x:Static Slider.DecreaseLarge}"
+                        Style="{StaticResource PreviewSliderRepeatButtonVerticalStyle}" />
+                </Track.DecreaseRepeatButton>
+                <Track.IncreaseRepeatButton>
+                    <RepeatButton
+                        Width="{TemplateBinding TrackHeight}"
+                        Background="{TemplateBinding Background}"
+                        Command="{x:Static Slider.IncreaseLarge}"
+                        Style="{StaticResource PreviewSliderRepeatButtonVerticalStyle}" />
+                </Track.IncreaseRepeatButton>
+                <Track.Thumb>
+                    <Thumb
+                        x:Name="PART_Thumb"
+                        HorizontalAlignment="Center"
+                        Focusable="False"
+                        OverridesDefaultStyle="True"
+                        Template="{TemplateBinding ThumbTemplate}"
+                        Visibility="{TemplateBinding ThumbVisibility}" />
+                </Track.Thumb>
+            </Track>
+        </local:SimplePanel>
+        <ControlTemplate.Triggers>
+            <Trigger Property="ThumbTemplate" Value="{x:Null}">
+                <Setter TargetName="PART_Thumb" Property="Template" Value="{StaticResource PreviewSliderThumb}" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+
+
+
+
+    <!--  水平  -->
+    <ControlTemplate x:Key="PreviewSliderHorizontal" TargetType="{x:Type local:PlayerSlider}">
+        <local:SimplePanel>
+            <Track Value="{TemplateBinding CacheValue}">
+                <Track.DecreaseRepeatButton>
+                    <RepeatButton
+                        Height="{TemplateBinding TrackHeight}"
+                        Background="{TemplateBinding CacheBackground}"
+                        Style="{StaticResource PreviewSliderRepeatButtonHorizontalStyle}" />
+                </Track.DecreaseRepeatButton>
+                <Track.IncreaseRepeatButton>
+                    <RepeatButton
+                        Height="{TemplateBinding TrackHeight}"
+                        Background="{TemplateBinding NotyetBackground}"
+                        Style="{StaticResource PreviewSliderRepeatButtonHorizontalStyle}" />
+                </Track.IncreaseRepeatButton>
+            </Track>
+            <Track x:Name="PART_Track" VerticalAlignment="Center">
+                <Track.DecreaseRepeatButton>
+                    <RepeatButton
+                        Background="{TemplateBinding PastBackground}"
+                        Command="{x:Static Slider.DecreaseLarge}"
+                        Style="{StaticResource PreviewSliderRepeatButtonHorizontalStyle}" />
+                </Track.DecreaseRepeatButton>
+                <Track.IncreaseRepeatButton>
+                    <RepeatButton
+                        Background="{TemplateBinding Background}"
+                        Command="{x:Static Slider.IncreaseLarge}"
+                        Style="{StaticResource PreviewSliderRepeatButtonHorizontalStyle}" />
+                </Track.IncreaseRepeatButton>
+                <Track.Thumb>
+                    <Thumb
+                        x:Name="PART_Thumb"
+                        VerticalAlignment="Center"
+                        Focusable="False"
+                        OverridesDefaultStyle="True"
+                        Template="{TemplateBinding ThumbTemplate}"
+                        Visibility="{TemplateBinding ThumbVisibility}" />
+                </Track.Thumb>
+            </Track>
+        </local:SimplePanel>
+        <ControlTemplate.Triggers>
+            <Trigger Property="ThumbTemplate" Value="{x:Null}">
+                <Setter TargetName="PART_Thumb" Property="Template" Value="{StaticResource PreviewSliderThumb}" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+
+
+    <Style x:Key="PreviewSliderBaseStyle" TargetType="{x:Type local:PlayerSlider}">
+        <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false" />
+        <Setter Property="Background" Value="{DynamicResource SecondaryRegionBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
+        <Setter Property="TrackHeight" Value="2" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Template" Value="{StaticResource PreviewSliderHorizontal}" />
+        <Style.Triggers>
+            <Trigger Property="Orientation" Value="Vertical">
+                <Setter Property="Template" Value="{StaticResource PreviewSliderVertical}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Opacity" Value=".4" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style BasedOn="{StaticResource PreviewSliderBaseStyle}" TargetType="{x:Type local:PlayerSlider}" />
+</ResourceDictionary>

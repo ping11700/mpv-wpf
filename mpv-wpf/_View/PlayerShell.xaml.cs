@@ -1,6 +1,4 @@
-﻿
-
-namespace mpv_wpf._View;
+﻿namespace mpv_wpf._View;
 
 /// <summary>
 /// PlayerShell.xaml 的交互逻辑
@@ -19,6 +17,8 @@ public partial class PlayerShell : BasePlayerWindow
     {
         InitializeComponent();
 
+        this.DataContext = new ViewModel_PlayerBase(player);
+
         this.Title = Consts.APPShellName;//API_Window.CallMainWindow  调用此参数;
         this.AllowDrop = true;
 
@@ -33,8 +33,10 @@ public partial class PlayerShell : BasePlayerWindow
         this.DataContextChanged += PlayerShell_DataContextChanged;
 
         this.Tips_TextBlock.DataContextChanged += (s, e) => TipAnimation();
+
+        this.ContentPresentDrawer.Content = new UserControl_PlayList();
     }
-  
+
     #region Events
 
     /// <summary>
@@ -74,10 +76,10 @@ public partial class PlayerShell : BasePlayerWindow
         this.SetCurrentValue(System.Windows.Shell.WindowChrome.WindowChromeProperty, wc);
         wc.Freeze();
 
-        this.TopFunc_SimplePanel.SetCurrentValue(Border.CornerRadiusProperty, isIn ? new CornerRadius(0) : new CornerRadius(12, 12, 0, 0));
-        this.BottomFunc_UC.SetCurrentValue(Attach_Border.CornerRadiusProperty, isIn ? new CornerRadius(0) : new CornerRadius(0, 0, 12, 12));
+        //this.TopFunc_SimplePanel.SetCurrentValue(Border.CornerRadiusProperty, isIn ? new CornerRadius(0) : new CornerRadius(12, 12, 0, 0));
+        //this.BottomFunc_UC.SetCurrentValue(Attach_Border.CornerRadiusProperty, isIn ? new CornerRadius(0) : new CornerRadius(0, 0, 12, 12));
 
-        this.Operate_StackPanel.Visibility = isIn ? Visibility.Hidden : Visibility.Visible;
+        this.TopFunc_UC.Operate_StackPanel.Visibility = isIn ? Visibility.Hidden : Visibility.Visible;
     }
 
 
@@ -98,8 +100,6 @@ public partial class PlayerShell : BasePlayerWindow
     /// </summary>
     protected override void PlayLocalMedias(string[] files)
     {
-        //this.DataContext = ((App)App.Current)?.GetRequiredService<ViewModel_PlayerLocal>();
-
         IPlayer?.Start(files, isFile: true);
     }
 
@@ -273,14 +273,14 @@ public partial class PlayerShell : BasePlayerWindow
         if (b)
         {
             this.Cursor = Cursors.Arrow;
-            this.TopFunc_SimplePanel.Opacity = 1;
+            this.TopFunc_UC.Opacity = 1;
             this.BottomFunc_UC.Opacity = 1;
             this.Drawer_ToggleButton.Opacity = 1;
         }
         else
         {
             this.Cursor = Cursors.None;
-            this.TopFunc_SimplePanel.Opacity = 0;
+            this.TopFunc_UC.Opacity = 0;
             this.BottomFunc_UC.Opacity = 0;
             this.Drawer_ToggleButton.Opacity = 0;
         }

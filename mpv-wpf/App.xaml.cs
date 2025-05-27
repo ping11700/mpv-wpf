@@ -1,12 +1,12 @@
-﻿using mpv_wpf._View;
-
-namespace mpv_wpf;
+﻿namespace mpv_wpf;
 
 /// <summary>
 /// Interaction logic for App.xaml
 /// </summary>
 public partial class App : Application
 {
+
+
     /// <summary>
     /// 检测多个进程同时运行的互斥体
     /// </summary>
@@ -38,6 +38,7 @@ public partial class App : Application
 
             return;
         }
+
 
         new PlayerShell(new PlayerMpv()).Show();
     }

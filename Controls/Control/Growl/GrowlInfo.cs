@@ -7,7 +7,7 @@
 public class GrowlInfo
 {
     public Window ParentWin { get; set; }
-  
+
     public string Message { get; set; }
 
     public bool ShowDateTime { get; set; } = true;

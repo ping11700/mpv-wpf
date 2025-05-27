@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:attach="clr-namespace:Controls.AttachedProperties;assembly=Controls"
+    xmlns:attach="clr-namespace:Controls.AttachedProperties"
     xmlns:local="clr-namespace:Controls.Control">
     <ResourceDictionary.MergedDictionaries>
         <!--  资源集合  -->

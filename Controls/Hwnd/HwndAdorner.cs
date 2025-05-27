@@ -1,5 +1,4 @@
-﻿using Controls.Utils;
-using POINT = Core.WindowsAPI.POINT;
+﻿using POINT = Core.WindowsAPI.POINT;
 
 namespace Controls.Hwnd;
 /// <summary>

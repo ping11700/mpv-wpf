@@ -14,17 +14,16 @@
         <ResourceDictionary Source="pack://application:,,,/Controls;component/Control/ProcessBar/BusyBox.xaml" />
 
         <ResourceDictionary Source="pack://application:,,,/Controls;component/Control/ProcessBar/WaveProgressBar.xaml" />
-
         <!--  ProcessBar  -->
 
         <!--  ScrollViewer  -->
-
         <ResourceDictionary Source="pack://application:,,,/Controls;component/Control/ScrollViewer/ScrollViewer.xaml" />
         <!--  ScrollViewer  -->
 
 
-
-
+        <!--  Slider  -->
+        <ResourceDictionary Source="pack://application:,,,/Controls;component/Control/Slider/PlayerSlider.xaml" />
+        <!--  Slider  -->
 
 
     </ResourceDictionary.MergedDictionaries>

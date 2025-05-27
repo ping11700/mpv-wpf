@@ -9,13 +9,15 @@
     xmlns:local="clr-namespace:mpv_wpf._View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:vm="clr-namespace:mpv_wpf._ViewModel"
+    d:DataContext="{d:DesignInstance {x:Type vm:ViewModel_PlayerBase}}"
     d:DesignHeight="150"
     d:DesignWidth="800"
     Foreground="White"
     mc:Ignorable="d">
 
-    <control:SimplePanel>
-        <Border CornerRadius="{Binding (attach:Attach_Border.CornerRadius), RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+    <control:SimplePanel Height="120">
+        <Border CornerRadius="0,0,12,12">
             <Border.Background>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                     <GradientStop Offset="0.0" Color="#00000000" />
@@ -23,6 +25,154 @@
                 </LinearGradientBrush>
             </Border.Background>
         </Border>
+
+        <StackPanel Margin="10" VerticalAlignment="Bottom">
+            <!--  视频进度条  -->
+            <control:PlayerSlider
+                Background="Gray"
+                CacheBackground="#B2CCCCCC"
+                CacheValue="{Binding IPlayer.CachePos, Mode=OneWay}"
+                Maximum="{Binding IPlayer.Duration, Mode=OneWay, TargetNullValue=1}"
+                Minimum="0"
+                NotyetBackground="#B2999999"
+                PastBackground="#FFF42C2C"
+                TrackHeight="1"
+                WantValue="{Binding IPlayer.CurrentPos, Mode=OneWay}">
+                <control:PlayerSlider.PreviewContent>
+                    <TextBlock Foreground="Red" Text="{Binding Path=(control:PlayerSlider.PreviewPosition), Mode=OneWay, StringFormat={}{0:hh}:{0:mm}:{0:ss}, RelativeSource={RelativeSource Self}, Converter={StaticResource DateFormatConverter}, ConverterParameter=Milliseconds}" />
+                </control:PlayerSlider.PreviewContent>
+            </control:PlayerSlider>
+
+            <DockPanel Margin="0,5,0,0">
+                <!--  暂停/恢复  -->
+                <ToggleButton
+                    attach:Attach_IconSwitch.Geometry="{StaticResource PauseGeometry}"
+                    attach:Attach_IconSwitch.SelectedGeometry="{StaticResource PlayGeometry}"
+                    Command="{Binding IPlayer.TogglePlayCmd, Mode=OneWay}"
+                    IsChecked="{Binding IPlayer.IsPause, Mode=OneWay}"
+                    Style="{StaticResource ToggleButtonPathSwitchStyle}" />
+                <!--  暂停/恢复 end  -->
+
+
+                <!--  后退 10s  -->
+                <Button
+                    Margin="15,0"
+                    attach:Attach_Icon.Geometry="{StaticResource BackVideoGeometry}"
+                    attach:Attach_Icon.Height="24"
+                    attach:Attach_Icon.Width="24"
+                    Command="{Binding IPlayer.BackwardCmd, Mode=OneWay}"
+                    Style="{StaticResource ButtonPathStyle}" />
+
+
+                <!--  后退 10s 结束  -->
+
+                <!--  前进10s  -->
+                <Button
+                    attach:Attach_Icon.Geometry="{StaticResource ForwardVideoGeometry}"
+                    attach:Attach_Icon.Height="24"
+                    attach:Attach_Icon.Width="24"
+                    Command="{Binding IPlayer.ForwardCmd, Mode=OneWay}"
+                    Style="{StaticResource ButtonPathStyle}" />
+
+
+                <!--  前进10秒 结束  -->
+
+                <!--  播放进度  -->
+                <TextBlock Margin="15,0" VerticalAlignment="Center">
+                    <Run d:Text="00:12:34" Text="{Binding IPlayer.CurrentPos, Mode=OneWay, StringFormat={}{0:hh}:{0:mm}:{0:ss}, Converter={StaticResource DateFormatConverter}, ConverterParameter=Milliseconds}" />
+                    <Run Foreground="#FF9F9F9F" Text="/" />
+                    <Run
+                        d:Text="12:34:56"
+                        Foreground="#FF9F9F9F"
+                        Text="{Binding IPlayer.Duration, Mode=OneWay, StringFormat={}{0:hh}:{0:mm}:{0:ss}, Converter={StaticResource DateFormatConverter}, ConverterParameter=Milliseconds}" />
+                </TextBlock>
+                <!--  播放进度结束  -->
+
+
+
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+
+                    <!--  音量  -->
+                    <control:AdornedControl
+                        AdornerOffsetX="-10"
+                        AdornerOffsetY="-20"
+                        IsMutex="True">
+                        <ToggleButton
+                            Margin="0,0,20,0"
+                            Command="{Binding IPlayer.ToggleMuteCmd, Mode=OneWay}"
+                            IsChecked="{Binding IPlayer.IsMute, Mode=OneWay}">
+                            <ToggleButton.Template>
+                                <ControlTemplate TargetType="ToggleButton">
+                                    <Border Background="Transparent">
+                                        <Viewbox Width="20" Height="20">
+                                            <Path
+                                                x:Name="Part_Path"
+                                                Data="{StaticResource NoVolumeGeometry}"
+                                                Fill="White"
+                                                Stretch="Uniform" />
+                                        </Viewbox>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <DataTrigger Binding="{Binding IPlayer.Volume, Mode=OneWay}" Value="0">
+                                            <Setter TargetName="Part_Path" Property="Data" Value="{StaticResource NoVolumeGeometry}" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding IPlayer.IsMute, Mode=OneWay}" Value="true">
+                                            <Setter TargetName="Part_Path" Property="Data" Value="{StaticResource NoVolumeGeometry}" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding IPlayer.Volume, Mode=OneWay, Converter={StaticResource GreaterThanNumber2BoolConverter}, ConverterParameter=0}" Value="True">
+                                            <Setter TargetName="Part_Path" Property="Data" Value="{StaticResource VolumeGeometry}" />
+                                        </DataTrigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </ToggleButton.Template>
+                        </ToggleButton>
+                        <control:AdornedControl.AdornerContent>
+                            <Border
+                                Width="36"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Top"
+                                Background="{StaticResource Common_Dark02}"
+                                CornerRadius="4"
+                                Opacity="0.98">
+                                <StackPanel Margin="0,5">
+                                    <TextBlock
+                                        Margin="5"
+                                        HorizontalAlignment="Center"
+                                        FontSize="10"
+                                        Foreground="White"
+                                        Text="{Binding IPlayer.Volume, Mode=OneWay, StringFormat={}{0}%}" />
+
+                                    <Slider
+                                        x:Name="Volume_Slider"
+                                        Width="6"
+                                        Height="100"
+                                        HorizontalAlignment="Center"
+                                        HorizontalContentAlignment="Center"
+                                        IsMoveToPointEnabled="True"
+                                        Maximum="{Binding IPlayer.MaxVolume, Mode=OneWay}"
+                                        Minimum="0"
+                                        Orientation="Vertical"
+                                        SmallChange="0.001"
+                                        Style="{StaticResource BaseSliderStyle}"
+                                        Value="{Binding IPlayer.Volume, Mode=TwoWay}" />
+                                </StackPanel>
+                            </Border>
+                        </control:AdornedControl.AdornerContent>
+                    </control:AdornedControl>
+                    <!--  音量 结束  -->
+
+                    <!--  全屏切换  -->
+                    <ToggleButton
+                        attach:Attach_IconSwitch.Geometry="{StaticResource FullScreenGeometry}"
+                        attach:Attach_IconSwitch.SelectedGeometry="{StaticResource RestoreScreenGeometry}"
+                        Command="{x:Static command:ControlCommands.ToggleFullScreen}"
+                        IsChecked="{Binding IPlayer.IsFullScreen, Mode=OneWay}"
+                        Style="{StaticResource ToggleButtonPathSwitchStyle}" />
+
+                    <!--  全屏切换 结束  -->
+                </StackPanel>
+            </DockPanel>
+        </StackPanel>
 
     </control:SimplePanel>
 </UserControl>

@@ -24,7 +24,7 @@ public partial class Player
 
     public int VideoRotate => GetPropertyInt("video-rotate");
 
-    
+
     /// <summary>
     /// <0.01-100>
     /// </summary>
@@ -277,32 +277,18 @@ public partial class Player
     /// </summary>
     public void SubscribeEvents()
     {
-
-        ObservePropertyInt("playlist-pos", value =>
-        {
-            PlaylistPosChangedEvent?.Invoke(value);
-        });
-
+        ObservePropertyInt("playlist-pos", value => PlaylistPosChangedEvent?.Invoke(value));
 
         ObservePropertyInt("time-pos", value => TimePosChangedEvent?.Invoke());
 
         ObservePropertyBool("pause", value => PauseEvent?.Invoke(value));
 
-        ObservePropertyInt("video-rotate", value =>
-        {
-            if (VideoRotate != value)
-            {
-                UpdateVideoSize("dwidth", "dheight");
-            }
-        });
+        ObservePropertyInt("video-rotate", value => { if (VideoRotate != value) UpdateVideoSize("dwidth", "dheight"); });
 
         //是否到达播放进度的结束。
         //注意通常只有当 --keep-open 被启用时，这才有意义，因为否则播放器会立即播放下一个文件（或退出或进入空闲模式），
         //在这些情况下， eof-reach 属性被设置后，在逻辑上将立即被清除。
-        ObservePropertyBool("eof-reached", value =>
-        {
-            EofReachedEvent?.Invoke(value);
-        });
+        ObservePropertyBool("eof-reached", value => EofReachedEvent?.Invoke(value));
 
     }
 

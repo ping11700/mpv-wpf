@@ -5,6 +5,10 @@
 
     <converter:Bool2VisibilityConverter x:Key="Bool2VisibilityConverter" />
 
+    <converter:DateFormatConverter x:Key="DateFormatConverter" />
+
+    <converter:GreaterThanNumber2BoolConverter x:Key="GreaterThanNumber2BoolConverter" />
+
     <converter:InverseBool2VisibilityConverter x:Key="InverseBool2VisibilityConverter" />
 
     <converter:InverseBoolConverter x:Key="InverseBoolConverter" />

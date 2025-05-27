@@ -87,8 +87,6 @@ public class PlayerMpv : NotifyObject, IPlayer
 
     private readonly MpvLib.Player _player;
 
-    private bool _prePlay;
-
     public PlayerMpv()
     {
         _player = new MpvLib.Player();
@@ -133,8 +131,10 @@ public class PlayerMpv : NotifyObject, IPlayer
 
     private void Player_FileLoadedEvent()
     {
+        OnPropertyChanged(nameof(FileName));
+
         OnPropertyChanged(nameof(Duration));
-     
+
         OnPropertyChanged(nameof(IsLoading));
 
         IsPlayEnd = false;
@@ -144,7 +144,7 @@ public class PlayerMpv : NotifyObject, IPlayer
     }
 
     private void Player_TimePosChangedEvent()
-     {
+    {
         OnPropertyChanged(nameof(CurrentPos));
         OnPropertyChanged(nameof(CachePos));
 
@@ -193,8 +193,6 @@ public class PlayerMpv : NotifyObject, IPlayer
     {
         if (_player.KeepOpen != "no" && b == true)
         {
-            if (_prePlay == true) return;
-
             Play2EndEvent?.Invoke();
 
             IsPlayEnd = true;
@@ -337,7 +335,7 @@ public class PlayerMpv : NotifyObject, IPlayer
         }
     }
 
- 
+
 
     public void TogglePlay()
     {

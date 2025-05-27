@@ -851,10 +851,10 @@ public class Growl : System.Windows.Controls.Control
         _timerClose?.Stop();
         var transform = new TranslateTransform();
         _gridMain.RenderTransform = transform;
-        var animation =  new DoubleAnimation(FlowDirection == FlowDirection.LeftToRight ? ActualWidth : -ActualWidth, new Duration(TimeSpan.FromMilliseconds(200)))
-             {
-                 EasingFunction = new PowerEase { EasingMode = EasingMode.EaseInOut }
-             };
+        var animation = new DoubleAnimation(FlowDirection == FlowDirection.LeftToRight ? ActualWidth : -ActualWidth, new Duration(TimeSpan.FromMilliseconds(200)))
+        {
+            EasingFunction = new PowerEase { EasingMode = EasingMode.EaseInOut }
+        };
 
         animation.Completed += (s, e) =>
         {

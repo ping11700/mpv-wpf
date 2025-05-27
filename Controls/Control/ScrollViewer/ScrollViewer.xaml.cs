@@ -259,14 +259,14 @@ public class ScrollViewer : System.Windows.Controls.ScrollViewer
     protected override HitTestResult? HitTestCore(PointHitTestParameters hitTestParameters) => IsPenetrating ? null : base.HitTestCore(hitTestParameters);
 
 
-  
- 
+
+
 
     //记录上一次的滚动位置
     private double _lastLocation = 0;
 
-     
- 
+
+
     #region Touch
     private double _touchVerticalOffset;
     private TouchPoint? lastTouchDownPoint;

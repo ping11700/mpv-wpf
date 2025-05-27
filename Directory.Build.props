@@ -3,8 +3,6 @@
 		<CommonVersion>1.0.0.0</CommonVersion>
 		<!-- release 时 支持多个版本 -->
 		<MainTargetFrameworks>net8.0-windows;</MainTargetFrameworks>
-
-		<MainTargetFramework>net8.0-windows</MainTargetFramework>
 		<!-- 程序自动找最新的 runtime 比如编译6 版本 可以在 8 版本下运行 -->
 		<RollForward>Major</RollForward>
 		<LangVersion>preview</LangVersion>
