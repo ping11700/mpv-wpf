@@ -120,7 +120,7 @@
 
     <Style x:Key="BaseSliderStyle" TargetType="{x:Type Slider}">
         <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false" />
-        <Setter Property="Foreground" Value="Red" />
+        <Setter Property="Foreground" Value="{StaticResource ThemeBrush_Default}" />
         <Setter Property="Background" Value="{StaticResource Common_Gray07}" />
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Template" Value="{StaticResource HorizenSliderTemplate}" />

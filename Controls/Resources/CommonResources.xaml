@@ -5,6 +5,7 @@
     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
 
+    <Color x:Key="ThemeColor_Default">#2db84d</Color>
 
 
     <Color x:Key="LightPrimaryColor">#f3fbff</Color>
@@ -75,6 +76,10 @@
 
 
     <!--  画刷  -->
+    <SolidColorBrush
+        x:Key="ThemeBrush_Default"
+        o:Freeze="True"
+        Color="{DynamicResource ThemeColor_Default}" />
 
     <!--  常用暗色01  -->
     <SolidColorBrush

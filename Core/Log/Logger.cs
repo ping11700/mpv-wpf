@@ -8,7 +8,7 @@ public class Logger
     {
         var dir = $"{AppDomain.CurrentDomain.BaseDirectory}/logs";
         if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
-                
+
 
         System.Diagnostics.Trace.Listeners.Clear();  //清除系统监听器 (就是输出到Console的那个)
         System.Diagnostics.Trace.Listeners.Add(new LogListener()); //添加Logger实例

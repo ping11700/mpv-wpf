@@ -212,6 +212,8 @@ public partial class PlayerShell : BasePlayerWindow
     /// </summary>
     private void TogAnimateDrawer(bool? open = null)
     {
+        if (open == false && this.ContentPresentDrawer.Width <= 0) return;
+
         var isOpen = this.ContentPresentDrawer.Width <= 0;
 
         this.Drawer_ToggleButton.IsChecked = isOpen;

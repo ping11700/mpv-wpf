@@ -19,6 +19,7 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     Background="Transparent"
+    WindowStyle="None"
     mc:Ignorable="d">
     <WindowChrome.WindowChrome>
         <WindowChrome
@@ -104,6 +105,7 @@
                         VerticalContentAlignment="Bottom"
                         attach:Attach_IconSwitch.Geometry="{StaticResource LeftGeometry}"
                         attach:Attach_IconSwitch.SelectedGeometry="{StaticResource RightGeometry}"
+                        Background="Tan"
                         Command="{x:Static command:ControlCommands.ToggleDrawer}"
                         Style="{StaticResource ToggleButtonPathSwitchStyle}" />
 

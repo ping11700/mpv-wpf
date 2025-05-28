@@ -5,23 +5,7 @@
     xmlns:converter="clr-namespace:Controls.Converters"
     xmlns:local="clr-namespace:Controls.Control"
     xmlns:o="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
-    <Color x:Key="LightPrimaryColor">#f3fbff</Color>
-    <Color x:Key="PrimaryColor">#326cf3</Color>
-    <Color x:Key="DarkPrimaryColor">#326cf3</Color>
-    <Color x:Key="SecondaryRegionColor">#eeeeee</Color>
-    <Color x:Key="BorderColor">#e0e0e0</Color>
-    <SolidColorBrush
-        x:Key="BorderBrush"
-        o:Freeze="True"
-        Color="{DynamicResource BorderColor}" />
-    <SolidColorBrush
-        x:Key="SecondaryRegionBrush"
-        o:Freeze="True"
-        Color="{DynamicResource SecondaryRegionColor}" />
-    <LinearGradientBrush x:Key="PrimaryBrush" o:Freeze="True" StartPoint="0,0" EndPoint="1,0">
-        <GradientStop o:Freeze="True" Offset="0" Color="{DynamicResource PrimaryColor}" />
-        <GradientStop o:Freeze="True" Offset="1" Color="{DynamicResource DarkPrimaryColor}" />
-    </LinearGradientBrush>
+
     <ControlTemplate x:Key="PreviewSliderThumb" TargetType="Thumb">
         <Border
             Name="BorderDot"
@@ -86,7 +70,7 @@
 
     <!--  竖直  -->
     <ControlTemplate x:Key="PreviewSliderVertical" TargetType="{x:Type local:PlayerSlider}">
-        <local:SimplePanel>
+        <local:SimplePanel Background="{TemplateBinding Background}">
             <Track Value="{TemplateBinding CacheValue}">
                 <Track.DecreaseRepeatButton>
                     <RepeatButton
@@ -113,7 +97,7 @@
                 <Track.IncreaseRepeatButton>
                     <RepeatButton
                         Width="{TemplateBinding TrackHeight}"
-                        Background="{TemplateBinding Background}"
+                        Background="{TemplateBinding NotyetBackground}"
                         Command="{x:Static Slider.IncreaseLarge}"
                         Style="{StaticResource PreviewSliderRepeatButtonVerticalStyle}" />
                 </Track.IncreaseRepeatButton>
@@ -141,7 +125,7 @@
 
     <!--  水平  -->
     <ControlTemplate x:Key="PreviewSliderHorizontal" TargetType="{x:Type local:PlayerSlider}">
-        <local:SimplePanel>
+        <local:SimplePanel Background="{TemplateBinding Background}">
             <Track Value="{TemplateBinding CacheValue}">
                 <Track.DecreaseRepeatButton>
                     <RepeatButton
@@ -165,7 +149,7 @@
                 </Track.DecreaseRepeatButton>
                 <Track.IncreaseRepeatButton>
                     <RepeatButton
-                        Background="{TemplateBinding Background}"
+                        Background="{TemplateBinding NotyetBackground}"
                         Command="{x:Static Slider.IncreaseLarge}"
                         Style="{StaticResource PreviewSliderRepeatButtonHorizontalStyle}" />
                 </Track.IncreaseRepeatButton>
@@ -191,8 +175,7 @@
 
     <Style x:Key="PreviewSliderBaseStyle" TargetType="{x:Type local:PlayerSlider}">
         <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false" />
-        <Setter Property="Background" Value="{DynamicResource SecondaryRegionBrush}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
+        <Setter Property="Background" Value="Transparent" />
         <Setter Property="TrackHeight" Value="2" />
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Template" Value="{StaticResource PreviewSliderHorizontal}" />
@@ -201,7 +184,7 @@
                 <Setter Property="Template" Value="{StaticResource PreviewSliderVertical}" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Opacity" Value=".4" />
+                <Setter Property="Opacity" Value=".8" />
             </Trigger>
         </Style.Triggers>
     </Style>

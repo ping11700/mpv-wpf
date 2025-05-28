@@ -240,15 +240,12 @@
         <Setter Property="attach:Attach_Icon.Width" Value="20" />
         <Setter Property="attach:Attach_Icon.Height" Value="20" />
         <Setter Property="Foreground" Value="{DynamicResource Common_White}" />
-        <Setter Property="attach:Attach_IconSwitch.Color" Value="{StaticResource Common_Red}" />
+        <Setter Property="attach:Attach_IconSwitch.Color" Value="{StaticResource Common_White}" />
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
-                    <Border
-                        Background="#01000000"
-                        BorderBrush="{x:Null}"
-                        BorderThickness="0">
+                    <Border Background="Transparent">
                         <local:SimplePanel>
                             <Path
                                 x:Name="PART_Path"
@@ -275,6 +272,7 @@
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="PART_Path" Property="Fill" Value="{Binding Path=(attach:Attach_IconSwitch.Color), Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
+                            <Setter Property="Opacity" Value="0.8" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
                             <Setter Property="Opacity" Value="0.8" />

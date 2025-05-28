@@ -29,17 +29,16 @@
         <StackPanel Margin="10" VerticalAlignment="Bottom">
             <!--  视频进度条  -->
             <control:PlayerSlider
-                Background="Gray"
                 CacheBackground="#B2CCCCCC"
                 CacheValue="{Binding IPlayer.CachePos, Mode=OneWay}"
                 Maximum="{Binding IPlayer.Duration, Mode=OneWay, TargetNullValue=1}"
                 Minimum="0"
                 NotyetBackground="#B2999999"
-                PastBackground="#FFF42C2C"
+                PastBackground="{StaticResource ThemeBrush_Default}"
                 TrackHeight="1"
                 WantValue="{Binding IPlayer.CurrentPos, Mode=OneWay}">
                 <control:PlayerSlider.PreviewContent>
-                    <TextBlock Foreground="Red" Text="{Binding Path=(control:PlayerSlider.PreviewPosition), Mode=OneWay, StringFormat={}{0:hh}:{0:mm}:{0:ss}, RelativeSource={RelativeSource Self}, Converter={StaticResource DateFormatConverter}, ConverterParameter=Milliseconds}" />
+                    <TextBlock Foreground="{StaticResource ThemeBrush_Default}" Text="{Binding Path=(control:PlayerSlider.PreviewPosition), Mode=OneWay, StringFormat={}{0:hh}:{0:mm}:{0:ss}, RelativeSource={RelativeSource Self}, Converter={StaticResource DateFormatConverter}, ConverterParameter=Milliseconds}" />
                 </control:PlayerSlider.PreviewContent>
             </control:PlayerSlider>
 
