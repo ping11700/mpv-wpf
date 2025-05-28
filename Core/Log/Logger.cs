@@ -38,5 +38,11 @@ public class Logger
 
     public static void Info(object msg) => System.Diagnostics.Trace.Write(msg, "[Info]");
 
-    public static void Trace(string msg) => System.Diagnostics.Trace.Write(msg, "[Trace]");
+    public static void Trace(string msg)
+    {
+#if DEBUG
+     System.Diagnostics.Trace.Write(msg, "[Trace]");
+#endif
+    }
+
 }

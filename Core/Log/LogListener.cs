@@ -1,22 +1,11 @@
 ﻿namespace Core.Log;
 
-
 public class LogListener : TraceListener
 {
     // level trace 日志 输出
     public override void Write(string? message)
     {
-
-#if DEBUG 
-
         File.AppendAllText(Logger.FilePath, DateTime.Now.ToString("HH:mm:ss") + message + Environment.NewLine);
-#else
-        if (GlobalVars.IsAdmin == true) 
-        {
-            File.AppendAllText(Logger.FilePath, DateTime.Now.ToString("HH:mm:ss") + message + Environment.NewLine);
-        }
-#endif
-
     }
 
     public override void WriteLine(string? message)
